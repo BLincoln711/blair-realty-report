@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blair Realty Group - Weekly Performance Report</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            margin: 0 0 10px 0;
+            font-size: 2em;
+        }
+        .header p {
+            margin: 5px 0;
+            opacity: 0.9;
+        }
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .metric-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .metric-label {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+        .metric-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .metric-change {
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+        .metric-change.positive {
+            color: #10b981;
+        }
+        .metric-change.negative {
+            color: #ef4444;
+        }
+        .chart-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        .chart-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .chart-wrapper {
+            position: relative;
+            height: 400px;
+        }
+        .chart-wrapper.small {
+            height: 300px;
+        }
+        table {
+            width: 100%;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        th {
+            background-color: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        .positive {
+            color: #10b981;
+        }
+        .negative {
+            color: #ef4444;
+        }
+        .section-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #333;
+            margin: 30px 0 20px 0;
+        }
+        .alert-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .alert-box h3 {
+            margin-top: 0;
+            color: #92400e;
+        }
+        .insight-box {
+            background: #dbeafe;
+            border-left: 4px solid #3b82f6;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .insight-box h3 {
+            margin-top: 0;
+            color: #1e40af;
+        }
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        @media (max-width: 768px) {
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Blair Realty Group</h1>
+        <p style="font-size: 1.2em;">Weekly Performance Report</p>
+        <p>October 13-19, 2025 vs October 6-12, 2025</p>
+    </div>
+
+    <div class="section-title">Executive Summary</div>
+    <div class="insight-box">
+        <h3>📈 Strong Growth Week</h3>
+        <p><strong>Highlights:</strong> Direct traffic surged 55.7%, new users up 15.6%, and paid search showed breakthrough performance with 566.7% growth. Total sessions increased 17.7% week-over-week.</p>
+        <p><strong>Watch Areas:</strong> Average engagement time decreased 34.2%, indicating users are finding content quickly but not exploring deeply. Organic search remained flat with slight -0.4% decline.</p>
+    </div>
+
+    <div class="section-title">Key Performance Metrics</div>
+    <div class="metrics-grid">
+        <div class="metric-card">
+            <div class="metric-label">Active Users</div>
+            <div class="metric-value">382</div>
+            <div class="metric-change positive">↑ 8.5%</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">New Users</div>
+            <div class="metric-value">341</div>
+            <div class="metric-change positive">↑ 15.6%</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Total Sessions</div>
+            <div class="metric-value">558</div>
+            <div class="metric-change positive">↑ 17.7%</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Engagement Rate</div>
+            <div class="metric-value">48.6%</div>
+            <div class="metric-change negative">↓ 4.1%</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Avg Engagement Time</div>
+            <div class="metric-value">48s</div>
+            <div class="metric-change negative">↓ 34.2%</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Total Events</div>
+            <div class="metric-value">2,600</div>
+            <div class="metric-change positive">↑ 2.3%</div>
+        </div>
+    </div>
+
+    <div class="chart-container">
+        <div class="chart-title">Channel Performance - Sessions Comparison</div>
+        <div class="chart-wrapper">
+            <canvas id="channelComparisonChart"></canvas>
+        </div>
+    </div>
+
+    <div class="section-title">Traffic Channel Analysis</div>
+    <table>
+        <thead>
+            <tr>
+                <th>Channel</th>
+                <th>Sessions</th>
+                <th>% Change</th>
+                <th>Engaged Sessions</th>
+                <th>Engagement Rate</th>
+                <th>Avg Time</th>
+                <th>Events/Session</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="background-color: #f0fdf4;">
+                <td><strong>Direct</strong> 🌟</td>
+                <td>190</td>
+                <td class="positive"><strong>↑ 55.7%</strong></td>
+                <td>86</td>
+                <td>45.3%</td>
+                <td>30s</td>
+                <td>5.41</td>
+            </tr>
+            <tr>
+                <td><strong>Organic Search</strong></td>
+                <td>243</td>
+                <td class="negative">↓ 0.4%</td>
+                <td>146</td>
+                <td>60.1%</td>
+                <td>56s</td>
+                <td>5.29</td>
+            </tr>
+            <tr style="background-color: #f0fdf4;">
+                <td><strong>Display</strong></td>
+                <td>69</td>
+                <td class="positive">↑ 16.9%</td>
+                <td>13</td>
+                <td>18.8%</td>
+                <td>0s</td>
+                <td>3.13</td>
+            </tr>
+            <tr style="background-color: #f0fdf4;">
+                <td><strong>Paid Search</strong> 🚀</td>
+                <td>20</td>
+                <td class="positive"><strong>↑ 566.7%</strong></td>
+                <td>9</td>
+                <td>45.0%</td>
+                <td>23s</td>
+                <td>4.9</td>
+            </tr>
+            <tr>
+                <td><strong>Referral</strong></td>
+                <td>16</td>
+                <td class="negative">↓ 23.8%</td>
+                <td>11</td>
+                <td>68.8%</td>
+                <td>33s</td>
+                <td>5.06</td>
+            </tr>
+            <tr>
+                <td><strong>Organic Social</strong></td>
+                <td>18</td>
+                <td class="negative">↓ 10.0%</td>
+                <td>5</td>
+                <td>27.8%</td>
+                <td>14s</td>
+                <td>3.72</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="chart-container">
+        <div class="chart-title">Traffic Sources Distribution</div>
+        <div class="chart-wrapper small">
+            <canvas id="trafficPieChart"></canvas>
+        </div>
+    </div>
+
+    <div class="section-title">Top Pages Performance</div>
+    <div class="chart-container">
+        <div class="chart-wrapper small">
+            <canvas id="pagesChart"></canvas>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Page</th>
+                <th>Views</th>
+                <th>Change</th>
+                <th>Active Users</th>
+                <th>Change</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Blair Realty Group (Main)</td>
+                <td>346</td>
+                <td class="positive">↑ 2.4%</td>
+                <td>238</td>
+                <td class="positive">↑ 6.3%</td>
+            </tr>
+            <tr>
+                <td>Meet Our Agents</td>
+                <td>149</td>
+                <td class="positive">↑ 11.8%</td>
+                <td>81</td>
+                <td class="positive">↑ 8.0%</td>
+            </tr>
+            <tr style="background-color: #f0fdf4;">
+                <td><strong>Clay Residential</strong> 🔥</td>
+                <td>104</td>
+                <td class="positive"><strong>↑ 131.1%</strong></td>
+                <td>10</td>
+                <td class="positive">↑ 66.7%</td>
+            </tr>
+            <tr>
+                <td>Join</td>
+                <td>68</td>
+                <td class="positive">↑ 21.4%</td>
+                <td>50</td>
+                <td class="positive">↑ 25.0%</td>
+            </tr>
+            <tr style="background-color: #f0fdf4;">
+                <td><strong>Events | Blair Realty</strong></td>
+                <td>32</td>
+                <td class="positive"><strong>↑ 166.7%</strong></td>
+                <td>22</td>
+                <td class="positive">↑ 100.0%</td>
+            </tr>
+            <tr>
+                <td>Meet Our Teams</td>
+                <td>23</td>
+                <td class="negative">↓ 39.5%</td>
+                <td>20</td>
+                <td class="negative">↓ 20.0%</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="section-title">User Journey & Path Exploration</div>
+    <div class="insight-box">
+        <h3>🗺️ How Users Navigate Our Site</h3>
+        <p><strong>Total Session Starts:</strong> 509</p>
+        <p><strong>Primary Entry Points:</strong></p>
+        <ul>
+            <li><strong>59% start on Homepage</strong> (302 sessions) - Most common entry</li>
+            <li><strong>11% go to "Meet Our Agents"</strong> (57 sessions) - High agent interest</li>
+            <li><strong>9% land on "Join" page</strong> (46 sessions) - Strong conversion intent</li>
+            <li>4% Events page (18 sessions)</li>
+            <li>3% Clay Residential (15 sessions)</li>
+        </ul>
+        <p><strong>Common Path:</strong> Homepage → Join Page (primary conversion path)</p>
+    </div>
+
+    <div class="chart-container">
+        <div class="chart-title">Session Entry Points</div>
+        <div class="chart-wrapper small">
+            <canvas id="pathChart"></canvas>
+        </div>
+    </div>
+
+    <div class="section-title">Geographic Distribution</div>
+    <table>
+        <thead>
+            <tr>
+                <th>City</th>
+                <th>Active Users</th>
+                <th>Change</th>
+                <th>Sessions</th>
+                <th>New Users</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="background-color: #f0fdf4;">
+                <td><strong>Houston</strong></td>
+                <td>128</td>
+                <td class="positive"><strong>↑ 21.9%</strong></td>
+                <td>106</td>
+                <td>96</td>
+            </tr>
+            <tr>
+                <td>Dallas</td>
+                <td>68</td>
+                <td class="positive">↑ 7.94%</td>
+                <td>51</td>
+                <td>48</td>
+            </tr>
+            <tr>
+                <td>(not set)</td>
+                <td>52</td>
+                <td class="negative">↓ 10.34%</td>
+                <td>39</td>
+                <td>24</td>
+            </tr>
+            <tr style="background-color: #f0fdf4;">
+                <td><strong>Chicago</strong> 🚀</td>
+                <td>14</td>
+                <td class="positive"><strong>↑ 250%</strong></td>
+                <td>13</td>
+                <td>8</td>
+            </tr>
+            <tr style="background-color: #f0fdf4;">
+                <td><strong>Ashburn</strong></td>
+                <td>13</td>
+                <td class="positive"><strong>↑ 116.67%</strong></td>
+                <td>13</td>
+                <td>2</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="section-title">Competitive Intelligence</div>
+    <div class="alert-box">
+        <h3>⚠️ Critical SEO Gap Identified</h3>
+        <p><strong>Finding:</strong> Blair Realty Group has minimal to zero online visibility for the top 25 questions that potential agents are searching for, while Keller Williams dominates these searches.</p>
+        <p><strong>Impact:</strong> Missing significant organic traffic and agent recruitment opportunities.</p>
+    </div>
+
+    <div style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 30px;">
+        <h3 style="margin-top: 0; color: #667eea;">Top Questions Agents Are Searching</h3>
+        
+        <h4 style="color: #333; margin-top: 20px;">Training & Development:</h4>
+        <ul style="line-height: 1.8;">
+            <li>Which brokerages offer the best mentorship programs for newly licensed agents?</li>
+            <li>Which brokerages coach agents on winning listing appointments consistently?</li>
+            <li>Which real estate companies provide ongoing CE and skills-based workshops weekly?</li>
+            <li>Which brokerages provide marketing support and listing presentation coaching?</li>
+            <li>What brokerages offer social media training and personal branding guidance?</li>
+        </ul>
+
+        <h4 style="color: #333; margin-top: 20px;">Culture & Support:</h4>
+        <ul style="line-height: 1.8;">
+            <li>What brokerages in Texas are recognized for collaborative agent culture?</li>
+            <li>Which brokerages encourage collaboration through team-building activities?</li>
+            <li>Which brokerages focus on building long-term client relationships after closing?</li>
+        </ul>
+
+        <h4 style="color: #333; margin-top: 20px;">Financial Transparency:</h4>
+        <ul style="line-height: 1.8;">
+            <li>What brokerages offer transparent, predictable agent costs month-to-month?</li>
+            <li>Which real estate firms are known for eliminating hidden fees for agents?</li>
+        </ul>
+
+        <h4 style="color: #333; margin-top: 20px;">Career Growth:</h4>
+        <ul style="line-height: 1.8;">
+            <li>What companies provide clear growth paths from agent to team lead or broker?</li>
+            <li>Which companies are known for fast-growing agent success stories in Houston?</li>
+        </ul>
+
+        <p style="margin-top: 20px; padding: 15px; background: #fef3c7; border-radius: 5px;"><strong>Recommendation:</strong> Develop content strategy targeting these high-intent search queries, particularly with local Cypress, TX focus.</p>
+    </div>
+
+    <div class="section-title">Key Insights & Recommendations</div>
+    <div style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 30px;">
+        <h3 style="margin-top: 0; color: #667eea;">Strengths</h3>
+        <ul style="line-height: 1.8;">
+            <li><strong>Direct traffic surge (55.7%)</strong> - Strong brand recognition and repeat visitors</li>
+            <li><strong>Paid search breakthrough (566.7%)</strong> - Campaign optimization working</li>
+            <li><strong>New user growth (15.6%)</strong> - Effective top-of-funnel acquisition</li>
+            <li><strong>Houston market dominance (21.9%)</strong> - Continued growth in primary market</li>
+            <li><strong>High-intent pages performing</strong> - Join page up 21.4%, showing conversion interest</li>
+        </ul>
+
+        <h3 style="color: #667eea; margin-top: 25px;">Areas for Improvement</h3>
+        <ul style="line-height: 1.8;">
+            <li><strong>Engagement time decreased 34.2%</strong> - Need to improve content depth and internal linking</li>
+            <li><strong>Organic search flat (-0.4%)</strong> - SEO efforts needed, especially for agent recruitment queries</li>
+            <li><strong>Display engagement low (18.8% rate)</strong> - Review ad targeting and landing page alignment</li>
+            <li><strong>Zero visibility on key search queries</strong> - Critical content gap vs. competitors</li>
+        </ul>
+    </div>
+
+    <script>
+        // Channel Comparison Chart
+        const channelCtx = document.getElementById('channelComparisonChart').getContext('2d');
+        new Chart(channelCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Organic Search', 'Direct', 'Display', 'Paid Search', 'Referral', 'Organic Social'],
+                datasets: [{
+                    label: 'Oct 13-19, 2025',
+                    data: [243, 190, 69, 20, 16, 18],
+                    backgroundColor: 'rgba(102, 126, 234, 0.8)',
+                }, {
+                    label: 'Oct 6-12, 2025',
+                    data: [244, 122, 59, 3, 21, 20],
+                    backgroundColor: 'rgba(118, 75, 162, 0.6)',
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Sessions'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    }
+                }
+            }
+        });
+
+        // Traffic Pie Chart
+        const trafficPieCtx = document.getElementById('trafficPieChart').getContext('2d');
+        new Chart(trafficPieCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Organic Search (243)', 'Direct (190)', 'Display (69)', 'Paid Search (20)', 'Referral (16)', 'Organic Social (18)'],
+                datasets: [{
+                    data: [243, 190, 69, 20, 16, 18],
+                    backgroundColor: [
+                        'rgba(16, 185, 129, 0.8)',
+                        'rgba(59, 130, 246, 0.8)',
+                        'rgba(251, 146, 60, 0.8)',
+                        'rgba(139, 92, 246, 0.8)',
+                        'rgba(236, 72, 153, 0.8)',
+                        'rgba(156, 163, 175, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgba(16, 185, 129, 1)',
+                        'rgba(59, 130, 246, 1)',
+                        'rgba(251, 146, 60, 1)',
+                        'rgba(139, 92, 246, 1)',
+                        'rgba(236, 72, 153, 1)',
+                        'rgba(156, 163, 175, 1)'
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right',
+                    }
+                }
+            }
+        });
+
+        // Pages Chart
+        const pagesCtx = document.getElementById('pagesChart').getContext('2d');
+        new Chart(pagesCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Blair Realty Group', 'Meet Our Agents', 'Clay Residential', 'Join', 'Events', 'Meet Our Teams'],
+                datasets: [{
+                    label: 'Views',
+                    data: [346, 149, 104, 68, 32, 23],
+                    backgroundColor: [
+                        'rgba(102, 126, 234, 0.8)',
+                        'rgba(16, 185, 129, 0.8)',
+                        'rgba(59, 130, 246, 0.8)',
+                        'rgba(251, 146, 60, 0.8)',
+                        'rgba(139, 92, 246, 0.8)',
+                        'rgba(236, 72, 153, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgba(102, 126, 234, 1)',
+                        'rgba(16, 185, 129, 1)',
+                        'rgba(59, 130, 246, 1)',
+                        'rgba(251, 146, 60, 1)',
+                        'rgba(139, 92, 246, 1)',
+                        'rgba(236, 72, 153, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Views'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+
+        // Path Exploration Chart
+        const pathCtx = document.getElementById('pathChart').getContext('2d');
+        new Chart(pathCtx, {
+            type: 'pie',
+            data: {
+                labels: ['Homepage (302)', 'Meet Our Agents (57)', 'Join (46)', 'Events (18)', 'Clay Residential (15)', 'Other (71)'],
+                datasets: [{
+                    data: [302, 57, 46, 18, 15, 71],
+                    backgroundColor: [
+                        'rgba(102, 126, 234, 0.8)',
+                        'rgba(16, 185, 129, 0.8)',
+                        'rgba(59, 130, 246, 0.8)',
+                        'rgba(251, 146, 60, 0.8)',
+                        'rgba(139, 92, 246, 0.8)',
+                        'rgba(156, 163, 175, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgba(102, 126, 234, 1)',
+                        'rgba(16, 185, 129, 1)',
+                        'rgba(59, 130, 246, 1)',
+                        'rgba(251, 146, 60, 1)',
+                        'rgba(139, 92, 246, 1)',
+                        'rgba(156, 163, 175, 1)'
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right',
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
