@@ -556,7 +556,7 @@
         // Engagement Rate Chart
         const engagementCtx = document.getElementById('engagementChart').getContext('2d');
         new Chart(engagementCtx, {
-            type: 'horizontalBar',
+            type: 'bar',
             data: {
                 labels: ['Referral', 'Organic Search', 'Direct', 'Paid Search', 'Organic Social', 'Display'],
                 datasets: [{
@@ -604,14 +604,24 @@
                     label: 'Total Clicks',
                     data: [31, 94],
                     borderColor: 'rgba(102, 126, 234, 1)',
-                    backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                    backgroundColor: 'rgba(102, 126, 234, 0.2)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
                     yAxisID: 'y',
+                    pointRadius: 6,
+                    pointHoverRadius: 8,
                 }, {
                     label: 'Total Cost ($)',
                     data: [41.30, 112.05],
                     borderColor: 'rgba(239, 68, 68, 1)',
-                    backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                    backgroundColor: 'rgba(239, 68, 68, 0.2)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
                     yAxisID: 'y1',
+                    pointRadius: 6,
+                    pointHoverRadius: 8,
                 }]
             },
             options: {
@@ -626,18 +636,39 @@
                         type: 'linear',
                         display: true,
                         position: 'left',
+                        beginAtZero: true,
+                        max: 120,
+                        ticks: {
+                            stepSize: 20
+                        },
                         title: {
                             display: true,
-                            text: 'Clicks'
+                            text: 'Clicks',
+                            font: {
+                                size: 14,
+                                weight: 'bold'
+                            }
                         }
                     },
                     y1: {
                         type: 'linear',
                         display: true,
                         position: 'right',
+                        beginAtZero: true,
+                        max: 120,
+                        ticks: {
+                            stepSize: 20,
+                            callback: function(value) {
+                                return '$' + value;
+                            }
+                        },
                         title: {
                             display: true,
-                            text: 'Cost ($)'
+                            text: 'Cost ($)',
+                            font: {
+                                size: 14,
+                                weight: 'bold'
+                            }
                         },
                         grid: {
                             drawOnChartArea: false,
@@ -647,6 +678,28 @@
                 plugins: {
                     legend: {
                         position: 'top',
+                        labels: {
+                            font: {
+                                size: 13
+                            },
+                            padding: 15
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.dataset.yAxisID === 'y1') {
+                                    label += '$' + context.parsed.y.toFixed(2);
+                                } else {
+                                    label += context.parsed.y;
+                                }
+                                return label;
+                            }
+                        }
                     }
                 }
             }
