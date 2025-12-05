@@ -25,12 +25,21 @@
         }
 
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
             color: white;
             padding: 40px;
             border-radius: 10px;
             margin-bottom: 30px;
-            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header-text {
+            flex: 1;
+        }
+        .header-logo {
+            height: 45px;
+            opacity: 0.9;
         }
 
         .header h1 {
@@ -306,12 +315,15 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>Blair Realty Group</h1>
-            <p>Weekly Performance Report</p>
-            <div class="date-range">
-                <strong>November 10-16, 2025</strong><br>
-                Compared to November 3-9, 2025
+            <div class="header-text">
+                <h1>Blair Realty Group</h1>
+                <p>Weekly Performance Report</p>
+                <div class="date-range">
+                    <strong>November 10-16, 2025</strong><br>
+                    Compared to November 3-9, 2025
+                </div>
             </div>
+            <img src="/blok-logo.svg" alt="Blok.co" class="header-logo">
         </div>
 
         <div class="executive-summary">

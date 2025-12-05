@@ -41,6 +41,16 @@
         .header-content {
             position: relative;
             z-index: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header-text {
+            flex: 1;
+        }
+        .header-logo {
+            height: 45px;
+            opacity: 0.9;
         }
         .header h1 {
             margin: 0 0 10px 0;
@@ -270,11 +280,14 @@
 <body>
     <div class="header">
         <div class="header-content">
-            <h1>The Francie Malina Team</h1>
-            <p>Westchester County Premier Real Estate</p>
-            <p class="date-range">Total Search Baseline Report | Nov 24-30, 2025</p>
-            <span class="baseline-badge">Baseline Established</span>
-            <span class="blok-badge">Powered by Blok.co</span>
+            <div class="header-text">
+                <h1>The Francie Malina Team</h1>
+                <p>Westchester County Premier Real Estate</p>
+                <p class="date-range">Total Search Baseline Report | Nov 24-30, 2025</p>
+                <span class="baseline-badge">Baseline Established</span>
+                <span class="blok-badge">Powered by Blok.co</span>
+            </div>
+            <img src="/blok-logo.svg" alt="Blok.co" class="header-logo">
         </div>
     </div>
 
