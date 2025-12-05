@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blair Realty Group - Weekly Performance Report | Nov 17-23, 2025</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0,212,255,0.1) 0%, rgba(0,212,255,0.05) 100%);
+            clip-path: polygon(100% 0, 0% 100%, 100% 100%);
+        }
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        .header h1 {
+            margin: 0 0 10px 0;
+            font-size: 2.2em;
+            font-weight: 700;
+        }
+        .header p {
+            margin: 5px 0;
+            opacity: 0.9;
+        }
+        .header .date-range {
+            font-size: 1.1em;
+            color: #00d4ff;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+        .blok-badge {
+            display: inline-block;
+            background: rgba(0,212,255,0.2);
+            border: 1px solid rgba(0,212,255,0.4);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin-top: 15px;
+            color: #00d4ff;
+        }
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .metric-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .metric-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        }
+        .metric-label {
+            color: #666;
+            font-size: 0.85em;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .metric-value {
+            font-size: 2em;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 5px;
+        }
+        .metric-change {
+            font-size: 0.9em;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .metric-change.positive {
+            color: #10b981;
+        }
+        .metric-change.negative {
+            color: #ef4444;
+        }
+        .metric-change.neutral {
+            color: #6b7280;
+        }
+        .chart-container {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+        }
+        .chart-title {
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #1a1a2e;
+        }
+        .chart-wrapper {
+            position: relative;
+            height: 350px;
+        }
+        .chart-wrapper.small {
+            height: 280px;
+        }
+        table {
+            width: 100%;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 14px 16px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        th {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            font-weight: 600;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        tr:hover {
+            background-color: #f9fafb;
+        }
+        .positive {
+            color: #10b981;
+            font-weight: 600;
+        }
+        .negative {
+            color: #ef4444;
+            font-weight: 600;
+        }
+        .section-title {
+            font-size: 1.4em;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin: 35px 0 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 24px;
+            background: linear-gradient(180deg, #00d4ff 0%, #0f3460 100%);
+            border-radius: 2px;
+        }
+        .insight-box {
+            background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
+            border-left: 4px solid #0ea5e9;
+            padding: 20px 25px;
+            border-radius: 0 10px 10px 0;
+            margin-bottom: 30px;
+        }
+        .insight-box h3 {
+            margin: 0 0 12px 0;
+            color: #0369a1;
+            font-size: 1.1em;
+        }
+        .insight-box p {
+            margin: 8px 0;
+            color: #0c4a6e;
+            line-height: 1.6;
+        }
+        .alert-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fffbeb 100%);
+            border-left: 4px solid #f59e0b;
+            padding: 20px 25px;
+            border-radius: 0 10px 10px 0;
+            margin-bottom: 30px;
+        }
+        .alert-box h3 {
+            margin: 0 0 12px 0;
+            color: #92400e;
+            font-size: 1.1em;
+        }
+        .alert-box p {
+            margin: 8px 0;
+            color: #78350f;
+            line-height: 1.6;
+        }
+        .success-box {
+            background: linear-gradient(135deg, #d1fae5 0%, #ecfdf5 100%);
+            border-left: 4px solid #10b981;
+            padding: 20px 25px;
+            border-radius: 0 10px 10px 0;
+            margin-bottom: 30px;
+        }
+        .success-box h3 {
+            margin: 0 0 12px 0;
+            color: #065f46;
+            font-size: 1.1em;
+        }
+        .success-box p {
+            margin: 8px 0;
+            color: #064e3b;
+            line-height: 1.6;
+        }
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+        @media (max-width: 768px) {
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+            .header {
+                padding: 25px;
+            }
+            .header h1 {
+                font-size: 1.6em;
+            }
+        }
+        .highlight-row {
+            background-color: #f0fdf4 !important;
+        }
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.75em;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+        .badge-success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .badge-warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        .badge-info {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        .footer {
+            text-align: center;
+            padding: 30px;
+            color: #6b7280;
+            font-size: 0.9em;
+            border-top: 1px solid #e5e7eb;
+            margin-top: 40px;
+        }
+        .footer a {
+            color: #0ea5e9;
+            text-decoration: none;
+        }
+        .kpi-highlight {
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        .kpi-item {
+            text-align: center;
+            padding: 15px;
+            border-right: 1px solid rgba(255,255,255,0.1);
+        }
+        .kpi-item:last-child {
+            border-right: none;
+        }
+        .kpi-item .value {
+            font-size: 2.2em;
+            font-weight: 700;
+            color: #00d4ff;
+        }
+        .kpi-item .label {
+            font-size: 0.9em;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+        .device-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .device-card {
+            background: #f9fafb;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .device-card .icon {
+            font-size: 1.5em;
+            margin-bottom: 8px;
+        }
+        .device-card .value {
+            font-size: 1.4em;
+            font-weight: 700;
+            color: #1a1a2e;
+        }
+        .device-card .label {
+            font-size: 0.85em;
+            color: #6b7280;
+        }
+        .device-card .change {
+            font-size: 0.8em;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <h1>Blair Realty Group</h1>
+            <p style="font-size: 1.2em; font-weight: 500;">Weekly Performance Report</p>
+            <p class="date-range">November 17 - 23, 2025</p>
+            <p style="opacity: 0.7; font-size: 0.9em;">Compared to November 10 - 16, 2025</p>
+            <div class="blok-badge">Powered by Blok.co</div>
+        </div>
+    </div>
+
+    <div class="section-title">Executive Summary</div>
+    <div class="insight-box">
+        <h3>Strong Session Growth and Organic Search Momentum</h3>
+        <p><strong>Key Wins:</strong> Total sessions up 10.86% (694 vs 626), organic search sessions surged 32.8% (340 vs 256), and Events page traffic exploded +130.77%. Engagement time per session improved to 52s (+11.16%). Views per session also increased 11.38%.</p>
+        <p><strong>Opportunities:</strong> With organic traffic growing strongly, there's potential to convert more of these visitors. Consider expanding content targeting for emerging markets like Iowa Colony (+800%) and Dallas (+19.7%).</p>
+    </div>
+
+    <div class="kpi-highlight">
+        <div class="kpi-item">
+            <div class="value">694</div>
+            <div class="label">Total Sessions (+10.86%)</div>
+        </div>
+        <div class="kpi-item">
+            <div class="value">482</div>
+            <div class="label">Total Users (-3.98%)</div>
+        </div>
+        <div class="kpi-item">
+            <div class="value">340</div>
+            <div class="label">Organic Sessions (+32.8%)</div>
+        </div>
+        <div class="kpi-item">
+            <div class="value">52s</div>
+            <div class="label">Avg Engagement (+11.16%)</div>
+        </div>
+    </div>
+
+    <div class="section-title">Key Performance Metrics</div>
+    <div class="metrics-grid">
+        <div class="metric-card">
+            <div class="metric-label">Total Users</div>
+            <div class="metric-value">482</div>
+            <div class="metric-change negative">&#8595; 3.98% (vs 502)</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">New Users</div>
+            <div class="metric-value">389</div>
+            <div class="metric-change negative">&#8595; 9.95% (vs 432)</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Total Sessions</div>
+            <div class="metric-value">694</div>
+            <div class="metric-change positive">&#8593; 10.86% (vs 626)</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Active Users</div>
+            <div class="metric-value">463</div>
+            <div class="metric-change negative">&#8595; 4.73% (vs 486)</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Avg Engagement Time</div>
+            <div class="metric-value">52s</div>
+            <div class="metric-change positive">&#8593; 11.16% (vs 47s)</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Views per Session</div>
+            <div class="metric-value">1.76</div>
+            <div class="metric-change positive">&#8593; 11.38% (vs 1.58)</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Avg Session Duration</div>
+            <div class="metric-value">2m 55s</div>
+            <div class="metric-change negative">&#8595; 20.25% (vs 3m 40s)</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Session Starts</div>
+            <div class="metric-value">690</div>
+            <div class="metric-change positive">&#8593; vs 626</div>
+        </div>
+    </div>
+
+    <div class="section-title">Traffic Channel Performance</div>
+    <div class="chart-container">
+        <div class="chart-title">Sessions by Channel - Week over Week</div>
+        <div class="chart-wrapper">
+            <canvas id="channelComparisonChart"></canvas>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Channel</th>
+                <th>Sessions</th>
+                <th>Change</th>
+                <th>Engaged Sessions</th>
+                <th>Engagement Rate</th>
+                <th>Avg Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="highlight-row">
+                <td><strong>Organic Search</strong> <span class="badge badge-success">TOP</span></td>
+                <td>340</td>
+                <td class="positive"><strong>&#8593; 32.8%</strong></td>
+                <td>202</td>
+                <td>59.4%</td>
+                <td>70.3s</td>
+            </tr>
+            <tr class="highlight-row">
+                <td><strong>Direct</strong></td>
+                <td>213</td>
+                <td class="positive">&#8593; 12.7%</td>
+                <td>106</td>
+                <td>49.8%</td>
+                <td>29.9s</td>
+            </tr>
+            <tr>
+                <td><strong>Display</strong></td>
+                <td>60</td>
+                <td class="negative">&#8595; 25.0%</td>
+                <td>7</td>
+                <td>11.7%</td>
+                <td>0.3s</td>
+            </tr>
+            <tr>
+                <td><strong>Paid Search</strong></td>
+                <td>48</td>
+                <td class="negative">&#8595; 17.2%</td>
+                <td>22</td>
+                <td>45.8%</td>
+                <td>89.2s</td>
+            </tr>
+            <tr>
+                <td><strong>Referral</strong></td>
+                <td>17</td>
+                <td class="positive">&#8593; 21.4%</td>
+                <td>10</td>
+                <td>58.8%</td>
+                <td>65.1s</td>
+            </tr>
+            <tr>
+                <td><strong>Organic Social</strong></td>
+                <td>10</td>
+                <td class="neutral">0%</td>
+                <td>4</td>
+                <td>40.0%</td>
+                <td>40.9s</td>
+            </tr>
+            <tr>
+                <td><strong>Unassigned</strong></td>
+                <td>5</td>
+                <td class="negative">&#8595; 37.5%</td>
+                <td>2</td>
+                <td>40.0%</td>
+                <td>91.6s</td>
+            </tr>
+            <tr>
+                <td><strong>Paid Social</strong></td>
+                <td>0</td>
+                <td class="negative">&#8595; 100%</td>
+                <td>0</td>
+                <td>0%</td>
+                <td>0s</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="success-box">
+        <h3>Organic Search Breakthrough</h3>
+        <p><strong>+32.8% session growth</strong> in organic search (340 vs 256) - the highest-quality traffic source with 59.4% engagement rate and 70.3s average engagement time. This validates the AI visibility and SEO content work.</p>
+    </div>
+
+    <div class="two-column">
+        <div class="chart-container">
+            <div class="chart-title">Traffic Distribution</div>
+            <div class="chart-wrapper small">
+                <canvas id="trafficPieChart"></canvas>
+            </div>
+        </div>
+        <div class="chart-container">
+            <div class="chart-title">Engagement Rate by Channel</div>
+            <div class="chart-wrapper small">
+                <canvas id="engagementChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-title">Landing Page Performance</div>
+    <table>
+        <thead>
+            <tr>
+                <th>Landing Page</th>
+                <th>Sessions</th>
+                <th>Change</th>
+                <th>Active Users</th>
+                <th>New Users</th>
+                <th>Avg Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="highlight-row">
+                <td><strong>Homepage (/)</strong></td>
+                <td>356</td>
+                <td class="positive"><strong>&#8593; 17.11%</strong></td>
+                <td>266</td>
+                <td>208</td>
+                <td>49s</td>
+            </tr>
+            <tr>
+                <td><strong>/join</strong></td>
+                <td>68</td>
+                <td class="positive">&#8593; 7.94%</td>
+                <td>55</td>
+                <td>49</td>
+                <td>2m 17s</td>
+            </tr>
+            <tr>
+                <td><strong>/meet-our-agents</strong></td>
+                <td>50</td>
+                <td class="negative">&#8595; 25.37%</td>
+                <td>40</td>
+                <td>25</td>
+                <td>1m 19s</td>
+            </tr>
+            <tr class="highlight-row">
+                <td><strong>/events</strong> <span class="badge badge-success">HOT</span></td>
+                <td>30</td>
+                <td class="positive"><strong>&#8593; 130.77%</strong></td>
+                <td>20</td>
+                <td>18</td>
+                <td>25s</td>
+            </tr>
+            <tr class="highlight-row">
+                <td><strong>/clay-residential</strong></td>
+                <td>12</td>
+                <td class="positive">&#8593; 71.43%</td>
+                <td>10</td>
+                <td>9</td>
+                <td>54s</td>
+            </tr>
+            <tr>
+                <td><strong>/check-out-our-office</strong></td>
+                <td>7</td>
+                <td class="positive">&#8593; 16.67%</td>
+                <td>6</td>
+                <td>4</td>
+                <td>31s</td>
+            </tr>
+            <tr>
+                <td><strong>/meet-our-teams</strong></td>
+                <td>7</td>
+                <td class="positive">&#8593; 40%</td>
+                <td>7</td>
+                <td>4</td>
+                <td>56s</td>
+            </tr>
+            <tr>
+                <td><strong>/meet-our-leadership</strong></td>
+                <td>6</td>
+                <td class="positive">&#8593; 50%</td>
+                <td>5</td>
+                <td>3</td>
+                <td>9s</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="section-title">User Journey Analysis</div>
+    <div class="insight-box">
+        <h3>Path Exploration Insights</h3>
+        <p><strong>690 Total Session Starts</strong></p>
+        <ul style="margin: 15px 0; padding-left: 20px; line-height: 1.8;">
+            <li><strong>54% start on Homepage</strong> (373 sessions) - Primary entry point</li>
+            <li><strong>10.4% land on Join page</strong> (72 sessions) - Strong conversion intent</li>
+            <li><strong>9% go to Meet Our Agents</strong> (62 sessions) - High agent interest</li>
+        </ul>
+        <p><strong>Top Conversion Path:</strong> Homepage &#8594; Join &#8594; Blair Realty Group Main &#8594; Contact</p>
+    </div>
+
+    <div class="chart-container">
+        <div class="chart-title">Session Entry Points</div>
+        <div class="chart-wrapper small">
+            <canvas id="pathChart"></canvas>
+        </div>
+    </div>
+
+    <div class="section-title">Geographic Performance</div>
+    <table>
+        <thead>
+            <tr>
+                <th>City</th>
+                <th>Active Users</th>
+                <th>Change</th>
+                <th>New Users</th>
+                <th>Engaged Sessions</th>
+                <th>Avg Engagement Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Houston</strong> <span class="badge badge-info">PRIMARY</span></td>
+                <td>162</td>
+                <td class="positive">&#8593; 2.5%</td>
+                <td>117</td>
+                <td>146</td>
+                <td>131.6s</td>
+            </tr>
+            <tr class="highlight-row">
+                <td><strong>Dallas</strong></td>
+                <td>91</td>
+                <td class="positive"><strong>&#8593; 19.7%</strong></td>
+                <td>71</td>
+                <td>53</td>
+                <td>48.6s</td>
+            </tr>
+            <tr class="highlight-row">
+                <td><strong>Iowa Colony</strong> <span class="badge badge-success">NEW</span></td>
+                <td>9</td>
+                <td class="positive"><strong>&#8593; 800%</strong></td>
+                <td>5</td>
+                <td>10</td>
+                <td>52.3s</td>
+            </tr>
+            <tr>
+                <td><strong>Des Moines</strong></td>
+                <td>7</td>
+                <td class="positive">&#8593; 16.7%</td>
+                <td>7</td>
+                <td>5</td>
+                <td>22.7s</td>
+            </tr>
+            <tr class="highlight-row">
+                <td><strong>North Charleston</strong> <span class="badge badge-success">NEW</span></td>
+                <td>7</td>
+                <td class="positive"><strong>NEW</strong></td>
+                <td>7</td>
+                <td>3</td>
+                <td>15.1s</td>
+            </tr>
+            <tr>
+                <td><strong>San Jose</strong></td>
+                <td>7</td>
+                <td class="positive">&#8593; 40%</td>
+                <td>7</td>
+                <td>6</td>
+                <td>37.3s</td>
+            </tr>
+            <tr>
+                <td><strong>Chicago</strong></td>
+                <td>6</td>
+                <td class="positive">&#8593; 200%</td>
+                <td>4</td>
+                <td>4</td>
+                <td>12.7s</td>
+            </tr>
+            <tr>
+                <td><strong>Conroe</strong></td>
+                <td>5</td>
+                <td class="negative">&#8595; 61.5%</td>
+                <td>2</td>
+                <td>5</td>
+                <td>11.4s</td>
+            </tr>
+            <tr>
+                <td><strong>The Woodlands</strong></td>
+                <td>4</td>
+                <td class="positive">&#8593; 100%</td>
+                <td>4</td>
+                <td>3</td>
+                <td>62.3s</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="success-box">
+        <h3>Geographic Expansion</h3>
+        <p><strong>Iowa Colony</strong> emerged as a new hotspot with +800% growth (9 users vs 1). <strong>North Charleston, SC</strong> appeared as a completely new market with 7 users. Dallas continues strong growth at +19.7%.</p>
+    </div>
+
+    <div class="section-title">Device & Platform Breakdown</div>
+    <div class="chart-container">
+        <div class="device-grid">
+            <div class="device-card">
+                <div class="icon">&#128241;</div>
+                <div class="value">257</div>
+                <div class="label">Mobile Users</div>
+                <div class="change negative">&#8595; 8.2% (vs 280)</div>
+            </div>
+            <div class="device-card">
+                <div class="icon">&#128187;</div>
+                <div class="value">205</div>
+                <div class="label">Desktop Users</div>
+                <div class="change positive">&#8593; 1.5% (vs 202)</div>
+            </div>
+            <div class="device-card">
+                <div class="icon">&#128218;</div>
+                <div class="value">1</div>
+                <div class="label">Tablet Users</div>
+                <div class="change negative">&#8595; 75% (vs 4)</div>
+            </div>
+        </div>
+        <div class="chart-title">Operating System Distribution</div>
+        <div class="chart-wrapper small">
+            <canvas id="osChart"></canvas>
+        </div>
+    </div>
+
+    <div class="section-title">Google Ads Performance</div>
+    <div class="insight-box">
+        <h3>CTR Efficiency Improving</h3>
+        <p>Click-through rate improved by 21.33% this week, showing better ad relevance and targeting. Total spend was reduced by 7.88% ($54.91 vs $59.60) while maintaining visibility. The campaigns continue to build brand awareness across Consumer and Agent audiences.</p>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Campaign</th>
+                <th>Clicks</th>
+                <th>Change</th>
+                <th>Impressions</th>
+                <th>CTR</th>
+                <th>Cost</th>
+                <th>Conversions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Consumer Brand Awareness | Display</strong></td>
+                <td>28</td>
+                <td class="negative">&#8595; 12.5%</td>
+                <td>4,822</td>
+                <td>0.58%</td>
+                <td>$27.25</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td><strong>Agent Brand Awareness | Display</strong></td>
+                <td>22</td>
+                <td class="negative">&#8595; 21.43%</td>
+                <td>362</td>
+                <td>6.08%</td>
+                <td>$27.66</td>
+                <td>0</td>
+            </tr>
+            <tr style="background: #f9fafb; font-weight: 600;">
+                <td><strong>Total</strong></td>
+                <td>50</td>
+                <td class="negative">&#8595; 16.67%</td>
+                <td>5,184</td>
+                <td>0.96%</td>
+                <td>$54.91</td>
+                <td>0</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="two-column">
+        <div style="background: white; padding: 25px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+            <h3 style="margin: 0 0 20px 0; color: #1a1a2e;">Week-over-Week Comparison</h3>
+            <table style="box-shadow: none; margin: 0;">
+                <tr>
+                    <td><strong>Total Clicks</strong></td>
+                    <td>50 vs 60</td>
+                    <td class="negative">&#8595; 16.67%</td>
+                </tr>
+                <tr>
+                    <td><strong>Impressions</strong></td>
+                    <td>5,184 vs 7,548</td>
+                    <td class="negative">&#8595; 31.32%</td>
+                </tr>
+                <tr>
+                    <td><strong>CTR</strong></td>
+                    <td>0.96% vs 0.79%</td>
+                    <td class="positive">&#8593; 21.33%</td>
+                </tr>
+                <tr>
+                    <td><strong>Avg CPC</strong></td>
+                    <td>$1.10 vs $0.99</td>
+                    <td class="negative">&#8593; 10.55%</td>
+                </tr>
+                <tr>
+                    <td><strong>Total Cost</strong></td>
+                    <td>$54.91 vs $59.60</td>
+                    <td class="positive">&#8595; 7.88%</td>
+                </tr>
+                <tr>
+                    <td><strong>Conversions</strong></td>
+                    <td>0 vs 1</td>
+                    <td class="negative">&#8595; 100%</td>
+                </tr>
+            </table>
+        </div>
+        <div class="chart-container" style="margin: 0;">
+            <div class="chart-title">Ad Spend by Campaign</div>
+            <div class="chart-wrapper small">
+                <canvas id="adSpendChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-title">Key Insights & Recommendations</div>
+    <div style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 30px;">
+        <h3 style="margin: 0 0 20px 0; color: #10b981;">&#9989; Strengths This Week</h3>
+        <ul style="line-height: 2; padding-left: 20px;">
+            <li><strong>Organic search surged 32.8%</strong> - AI visibility and content strategy delivering results</li>
+            <li><strong>Sessions up 10.86%</strong> - More overall traffic to the site</li>
+            <li><strong>Events page exploded +130.77%</strong> - Event marketing driving interest</li>
+            <li><strong>Homepage traffic +17.11%</strong> - Brand awareness improving</li>
+            <li><strong>Views per session +11.38%</strong> - Users exploring more content</li>
+            <li><strong>Iowa Colony emerged</strong> as new local market (+800%)</li>
+            <li><strong>Dallas growth +19.7%</strong> - Expanding beyond Houston</li>
+        </ul>
+
+        <h3 style="margin: 30px 0 20px 0; color: #0ea5e9;">&#128200; Opportunities for Growth</h3>
+        <ul style="line-height: 2; padding-left: 20px;">
+            <li><strong>New user acquisition:</strong> Opportunity to expand top-of-funnel reach with content marketing</li>
+            <li><strong>Meet Our Agents page:</strong> Opportunity to refresh with new agent spotlights and testimonials</li>
+            <li><strong>Session duration:</strong> Users may be finding what they need faster - consider adding more CTAs</li>
+            <li><strong>Conroe market:</strong> Opportunity to create targeted local content for this growing area</li>
+        </ul>
+
+        <h3 style="margin: 30px 0 20px 0; color: #0ea5e9;">&#128161; Recommendations</h3>
+        <ul style="line-height: 2; padding-left: 20px;">
+            <li><strong>Double down on organic:</strong> Continue AI visibility work - it's delivering strong results (32.8% growth)</li>
+            <li><strong>Replicate Events page success:</strong> Analyze what's driving the 130% spike and apply to other pages</li>
+            <li><strong>Refresh Meet Our Agents page:</strong> Add new content, testimonials, or agent spotlights</li>
+            <li><strong>Target Iowa Colony:</strong> New emerging market - consider local content strategy</li>
+            <li><strong>Expand Dallas presence:</strong> Build on the 19.7% growth with targeted campaigns</li>
+            <li><strong>Create Conroe content:</strong> Opportunity for local market-specific content</li>
+        </ul>
+    </div>
+
+    <div class="footer">
+        <p>Report generated by <a href="https://blok.co" target="_blank">Blok.co</a></p>
+        <p style="margin-top: 10px; font-size: 0.85em;">Blair Realty Group | Weekly Performance Report | November 17-23, 2025</p>
+    </div>
+
+    <script>
+        // Channel Comparison Chart
+        const channelCtx = document.getElementById('channelComparisonChart').getContext('2d');
+        new Chart(channelCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Organic Search', 'Direct', 'Display', 'Paid Search', 'Referral', 'Organic Social'],
+                datasets: [{
+                    label: 'Nov 17-23, 2025',
+                    data: [340, 213, 60, 48, 17, 10],
+                    backgroundColor: 'rgba(0, 212, 255, 0.8)',
+                    borderColor: 'rgba(0, 212, 255, 1)',
+                    borderWidth: 1
+                }, {
+                    label: 'Nov 10-16, 2025',
+                    data: [256, 189, 80, 58, 14, 10],
+                    backgroundColor: 'rgba(26, 26, 46, 0.6)',
+                    borderColor: 'rgba(26, 26, 46, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Sessions'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    }
+                }
+            }
+        });
+
+        // Traffic Pie Chart
+        const trafficPieCtx = document.getElementById('trafficPieChart').getContext('2d');
+        new Chart(trafficPieCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Organic Search (340)', 'Direct (213)', 'Display (60)', 'Paid Search (48)', 'Referral (17)', 'Organic Social (10)'],
+                datasets: [{
+                    data: [340, 213, 60, 48, 17, 10],
+                    backgroundColor: [
+                        'rgba(16, 185, 129, 0.8)',
+                        'rgba(59, 130, 246, 0.8)',
+                        'rgba(251, 146, 60, 0.8)',
+                        'rgba(139, 92, 246, 0.8)',
+                        'rgba(236, 72, 153, 0.8)',
+                        'rgba(156, 163, 175, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgba(16, 185, 129, 1)',
+                        'rgba(59, 130, 246, 1)',
+                        'rgba(251, 146, 60, 1)',
+                        'rgba(139, 92, 246, 1)',
+                        'rgba(236, 72, 153, 1)',
+                        'rgba(156, 163, 175, 1)'
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right',
+                    }
+                }
+            }
+        });
+
+        // Engagement Rate Chart
+        const engagementCtx = document.getElementById('engagementChart').getContext('2d');
+        new Chart(engagementCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Organic Search', 'Referral', 'Direct', 'Paid Search', 'Organic Social', 'Display'],
+                datasets: [{
+                    label: 'Engagement Rate %',
+                    data: [59.4, 58.8, 49.8, 45.8, 40.0, 11.7],
+                    backgroundColor: [
+                        'rgba(16, 185, 129, 0.8)',
+                        'rgba(16, 185, 129, 0.7)',
+                        'rgba(59, 130, 246, 0.8)',
+                        'rgba(139, 92, 246, 0.8)',
+                        'rgba(156, 163, 175, 0.8)',
+                        'rgba(239, 68, 68, 0.8)'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        max: 100,
+                        title: {
+                            display: true,
+                            text: 'Engagement Rate %'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+
+        // Path Chart
+        const pathCtx = document.getElementById('pathChart').getContext('2d');
+        new Chart(pathCtx, {
+            type: 'pie',
+            data: {
+                labels: ['Homepage (373)', 'Join (72)', 'Meet Our Agents (62)', 'Events (30)', 'Other (153)'],
+                datasets: [{
+                    data: [373, 72, 62, 30, 153],
+                    backgroundColor: [
+                        'rgba(0, 212, 255, 0.8)',
+                        'rgba(16, 185, 129, 0.8)',
+                        'rgba(59, 130, 246, 0.8)',
+                        'rgba(251, 146, 60, 0.8)',
+                        'rgba(156, 163, 175, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgba(0, 212, 255, 1)',
+                        'rgba(16, 185, 129, 1)',
+                        'rgba(59, 130, 246, 1)',
+                        'rgba(251, 146, 60, 1)',
+                        'rgba(156, 163, 175, 1)'
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right',
+                    }
+                }
+            }
+        });
+
+        // OS Chart
+        const osCtx = document.getElementById('osChart').getContext('2d');
+        new Chart(osCtx, {
+            type: 'bar',
+            data: {
+                labels: ['iOS', 'Windows', 'Macintosh', 'Android', 'Linux', 'Chrome OS'],
+                datasets: [{
+                    label: 'Nov 17-23',
+                    data: [198, 123, 67, 60, 6, 3],
+                    backgroundColor: 'rgba(0, 212, 255, 0.8)',
+                }, {
+                    label: 'Nov 10-16',
+                    data: [212, 144, 39, 72, 8, 5],
+                    backgroundColor: 'rgba(26, 26, 46, 0.6)',
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    }
+                }
+            }
+        });
+
+        // Ad Spend Chart
+        const adSpendCtx = document.getElementById('adSpendChart').getContext('2d');
+        new Chart(adSpendCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Consumer Brand Awareness ($27.25)', 'Agent Brand Awareness ($27.66)'],
+                datasets: [{
+                    data: [27.25, 27.66],
+                    backgroundColor: [
+                        'rgba(251, 146, 60, 0.8)',
+                        'rgba(139, 92, 246, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgba(251, 146, 60, 1)',
+                        'rgba(139, 92, 246, 1)'
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
