@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Case Study: Blair Realty Group AI Search Visibility | Blok.co</title>
+    <title>Case Study: Blair Realty Group | AI Search Visibility | Blok.co</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -14,6 +14,8 @@
             line-height: 1.6;
         }
         .container { max-width: 1200px; margin: 0 auto; padding: 30px 20px; }
+
+        /* Header */
         .header {
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
             color: white;
@@ -54,19 +56,89 @@
             color: #00d4ff;
             font-size: 0.9em;
         }
-        .results-hero {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            color: white;
-            padding: 40px;
-            border-radius: 12px;
+
+        /* Hero Stats */
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
             margin-bottom: 30px;
         }
-        .results-hero h2 { text-align: center; margin-bottom: 30px; font-size: 1.5em; }
-        .results-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-        .result-stat { text-align: center; padding: 20px; background: rgba(255,255,255,0.1); border-radius: 10px; }
-        .result-stat .number { font-size: 2.8em; font-weight: 700; }
-        .result-stat .label { font-size: 0.9em; opacity: 0.9; margin-top: 5px; }
-        .result-stat .detail { font-size: 0.8em; opacity: 0.7; margin-top: 5px; }
+        .hero-stat {
+            background: white;
+            border-radius: 12px;
+            padding: 30px 25px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border-top: 4px solid #00d4ff;
+        }
+        .hero-stat.highlight {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border-top: none;
+        }
+        .hero-stat .number {
+            font-size: 2.8em;
+            font-weight: 700;
+            color: #1a1a2e;
+            line-height: 1.1;
+        }
+        .hero-stat.highlight .number { color: white; }
+        .hero-stat .label {
+            font-size: 0.95em;
+            color: #666;
+            margin-top: 8px;
+            font-weight: 500;
+        }
+        .hero-stat.highlight .label { color: rgba(255,255,255,0.9); }
+        .hero-stat .detail {
+            font-size: 0.8em;
+            color: #999;
+            margin-top: 5px;
+        }
+        .hero-stat.highlight .detail { color: rgba(255,255,255,0.7); }
+
+        /* The Big Win Section */
+        .big-win {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .big-win h2 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+        .big-win .position-change {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            margin: 30px 0;
+        }
+        .position-box {
+            background: rgba(255,255,255,0.15);
+            border-radius: 12px;
+            padding: 25px 40px;
+            text-align: center;
+        }
+        .position-box .pos-label { font-size: 0.9em; opacity: 0.8; margin-bottom: 8px; }
+        .position-box .pos-num { font-size: 3.5em; font-weight: 700; }
+        .position-box .pos-page { font-size: 0.85em; opacity: 0.7; margin-top: 5px; }
+        .arrow-right {
+            font-size: 3em;
+            color: #93c5fd;
+        }
+        .big-win .subtext {
+            font-size: 1.1em;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Section Styling */
         .section {
             background: white;
             border-radius: 12px;
@@ -89,26 +161,73 @@
             background: linear-gradient(180deg, #00d4ff 0%, #0f3460 100%);
             border-radius: 3px;
         }
+
+        /* Data Tables */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .data-table th, .data-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .data-table th {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+        .data-table th:first-child { border-radius: 8px 0 0 0; }
+        .data-table th:last-child { border-radius: 0 8px 0 0; }
+        .data-table tr:hover { background-color: #f9fafb; }
+        .data-table .growth {
+            color: #10b981;
+            font-weight: 700;
+        }
+        .data-table .growth-huge {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9em;
+        }
+        .data-table .new-badge {
+            background: #3b82f6;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
+        /* What We Did Section */
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
         .action-card {
             background: #f8fafc;
             border: 2px solid #e2e8f0;
             border-radius: 10px;
             padding: 25px;
-            margin-bottom: 20px;
         }
-        .action-card.highlight {
+        .action-card.featured {
+            grid-column: span 2;
             background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%);
             color: white;
             border-color: #00d4ff;
         }
         .action-card h3 {
             font-size: 1.1em;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
             gap: 10px;
         }
-        .action-card.highlight h3 { color: #00d4ff; }
+        .action-card.featured h3 { color: #00d4ff; }
         .action-num {
             background: #00d4ff;
             color: #1a1a2e;
@@ -120,12 +239,13 @@
             font-weight: 700;
             font-size: 0.9em;
         }
-        .action-card p { margin-bottom: 12px; font-size: 0.95em; }
-        .action-card.highlight p { color: rgba(255,255,255,0.85); }
-        .action-card ul { padding-left: 20px; margin-bottom: 12px; }
-        .action-card li { margin-bottom: 8px; font-size: 0.95em; }
-        .action-card.highlight li { color: rgba(255,255,255,0.85); }
-        .result-badge {
+        .action-card p {
+            font-size: 0.95em;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        .action-card.featured p { color: rgba(255,255,255,0.8); }
+        .action-result {
             display: inline-block;
             background: #10b981;
             color: white;
@@ -133,102 +253,121 @@
             border-radius: 15px;
             font-size: 0.85em;
             font-weight: 600;
+            margin-top: 10px;
         }
-        .ai-dominance {
-            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-            color: white;
-            border-radius: 12px;
-            padding: 35px;
-            margin-bottom: 30px;
-        }
-        .ai-dominance h2 {
-            font-size: 1.5em;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .ai-dominance .trophy { font-size: 1.5em; }
-        .dominance-grid {
+
+        /* Keyword Wins */
+        .keyword-grid {
             display: grid;
-            grid-template-columns: 1fr 80px 1fr;
-            align-items: center;
+            grid-template-columns: repeat(3, 1fr);
             gap: 20px;
-            margin: 25px 0;
+            margin-top: 20px;
         }
-        .dominance-box {
-            background: rgba(255,255,255,0.1);
+        .keyword-card {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border: 2px solid #10b981;
             border-radius: 10px;
-            padding: 25px;
+            padding: 20px;
             text-align: center;
         }
-        .dominance-box .icon { font-size: 2em; margin-bottom: 10px; }
-        .dominance-box h4 { color: #93c5fd; margin-bottom: 8px; }
-        .dominance-box p { font-size: 0.9em; opacity: 0.9; }
-        .plus-sign { font-size: 2.5em; text-align: center; color: #93c5fd; }
-        .query-box {
-            background: rgba(0,0,0,0.2);
-            border-radius: 8px;
-            padding: 15px 20px;
-            margin-top: 20px;
-            font-family: monospace;
+        .keyword-card .query {
             font-size: 0.95em;
-        }
-        .query-box .label { color: #93c5fd; font-size: 0.8em; margin-bottom: 5px; }
-        .content-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        .content-table th, .content-table td {
-            padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid #e5e7eb;
-        }
-        .content-table th {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            color: white;
+            color: #1a1a2e;
             font-weight: 600;
-            font-size: 0.9em;
+            margin-bottom: 15px;
         }
-        .content-table th:first-child { border-radius: 8px 0 0 0; }
-        .content-table th:last-child { border-radius: 0 8px 0 0; }
-        .content-table tr:hover { background-color: #f9fafb; }
-        .positive { color: #10b981; font-weight: 600; }
-        .chart-container { position: relative; height: 350px; margin: 20px 0; }
-        .geo-section {
-            background: linear-gradient(135deg, #fef3c7 0%, #fffbeb 100%);
-            border: 2px solid #f59e0b;
+        .keyword-card .growth {
+            font-size: 2.2em;
+            font-weight: 700;
+            color: #059669;
+        }
+        .keyword-card .detail {
+            font-size: 0.8em;
+            color: #666;
+            margin-top: 8px;
+        }
+
+        /* Results Comparison */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        .comparison-box {
+            background: #f8fafc;
             border-radius: 10px;
             padding: 25px;
-            margin-top: 25px;
         }
-        .geo-section h3 { color: #92400e; margin-bottom: 15px; }
-        .geo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 15px; }
-        .geo-item { text-align: center; }
-        .geo-item .market { font-weight: 600; color: #1a1a2e; }
-        .geo-item .growth { font-size: 1.5em; font-weight: 700; color: #10b981; }
-        .geo-item .note { font-size: 0.8em; color: #666; }
-        .takeaway-box {
+        .comparison-box h4 {
+            font-size: 1em;
+            color: #666;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .comparison-box .metrics {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .metric-row .label { color: #666; }
+        .metric-row .value { font-weight: 700; color: #1a1a2e; font-size: 1.1em; }
+        .metric-row .change { color: #10b981; font-weight: 600; margin-left: 10px; }
+
+        /* Chart Container */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin: 20px 0;
+        }
+
+        /* Takeaway Box */
+        .takeaway {
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
             color: white;
-            padding: 35px;
+            padding: 40px;
             border-radius: 12px;
             margin-top: 30px;
+            text-align: center;
         }
-        .takeaway-box h3 { color: #00d4ff; font-size: 1.2em; margin-bottom: 25px; text-align: center; }
-        .takeaway-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
-        .takeaway-item { text-align: center; }
-        .takeaway-item .num {
-            background: #00d4ff;
-            color: #1a1a2e;
-            width: 35px; height: 35px;
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
+        .takeaway h3 {
+            font-size: 1.5em;
+            color: #00d4ff;
+            margin-bottom: 20px;
+        }
+        .takeaway p {
             font-size: 1.1em;
-            margin-bottom: 12px;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto 30px auto;
         }
-        .takeaway-item .title { font-size: 1em; font-weight: 600; margin-bottom: 8px; }
-        .takeaway-item .desc { font-size: 0.9em; opacity: 0.8; line-height: 1.5; }
+        .takeaway-stats {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin-top: 30px;
+        }
+        .takeaway-stat {
+            text-align: center;
+        }
+        .takeaway-stat .num {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: #00d4ff;
+        }
+        .takeaway-stat .label {
+            font-size: 0.9em;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        /* Footer */
         .footer {
             text-align: center;
             padding: 30px;
@@ -239,342 +378,341 @@
         }
         .footer .branding { font-weight: 700; color: #1a1a2e; font-size: 1.1em; }
         .footer .url { color: #00d4ff; }
-        .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
+
+        /* Responsive */
         @media (max-width: 768px) {
-            .results-grid { grid-template-columns: repeat(2, 1fr); }
-            .dominance-grid { grid-template-columns: 1fr; }
-            .plus-sign { transform: rotate(90deg); }
-            .geo-grid, .takeaway-grid { grid-template-columns: repeat(2, 1fr); }
-            .two-col { grid-template-columns: 1fr; }
+            .hero-stats { grid-template-columns: repeat(2, 1fr); }
+            .position-change { flex-direction: column; }
+            .arrow-right { transform: rotate(90deg); }
+            .actions-grid { grid-template-columns: 1fr; }
+            .action-card.featured { grid-column: span 1; }
+            .keyword-grid { grid-template-columns: 1fr; }
+            .comparison-grid { grid-template-columns: 1fr; }
+            .takeaway-stats { flex-direction: column; gap: 20px; }
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- Header -->
         <div class="header">
             <div class="header-content">
                 <div class="label">CASE STUDY</div>
                 <h1>Blair Realty Group</h1>
-                <div class="subtitle">Total Search & AI Visibility Program</div>
-                <div class="meta">Houston Metro Real Estate | November 2025 | 3-Week Engagement</div>
+                <div class="subtitle">AI Search Visibility Implementation</div>
+                <div class="meta">Houston Metro Real Estate | 60-Day Engagement | Aug-Nov 2025</div>
             </div>
             <div class="blok-badge">Powered by Blok.co</div>
         </div>
 
-        <div class="results-hero">
-            <h2>Program Results: November 3-23, 2025</h2>
-            <div class="results-grid">
-                <div class="result-stat">
-                    <div class="number">+15.3%</div>
-                    <div class="label">Organic Search Growth</div>
-                    <div class="detail">295 → 340 sessions</div>
-                </div>
-                <div class="result-stat">
-                    <div class="number">+62.5%</div>
-                    <div class="label">Engagement Time</div>
-                    <div class="detail">32s → 52s average</div>
-                </div>
-                <div class="result-stat">
-                    <div class="number">+130%</div>
-                    <div class="label">Events Page Traffic</div>
-                    <div class="detail">Content optimization win</div>
-                </div>
-                <div class="result-stat">
-                    <div class="number">2</div>
-                    <div class="label">New Markets Reached</div>
-                    <div class="detail">AI-driven expansion</div>
-                </div>
+        <!-- Hero Stats -->
+        <div class="hero-stats">
+            <div class="hero-stat highlight">
+                <div class="number">Page 1</div>
+                <div class="label">Average Search Position</div>
+                <div class="detail">Up from Page 3</div>
+            </div>
+            <div class="hero-stat">
+                <div class="number">+16%</div>
+                <div class="label">Organic Clicks</div>
+                <div class="detail">1.31K → 1.52K</div>
+            </div>
+            <div class="hero-stat">
+                <div class="number">+20%</div>
+                <div class="label">Total Events</div>
+                <div class="detail">928K → 1.1M</div>
+            </div>
+            <div class="hero-stat">
+                <div class="number">1,353</div>
+                <div class="label">Keywords Ranking</div>
+                <div class="detail">Expanded visibility</div>
             </div>
         </div>
 
-        <!-- Total Search Dominance Win -->
-        <div class="ai-dominance">
-            <h2><span class="trophy">🏆</span> Total Search Dominance Achieved</h2>
-            <p>Blair Realty Group captured <strong>both</strong> the Google AI Overview feature AND the #1 organic position for high-value agent recruitment queries - owning the entire search conversation.</p>
-
-            <div class="dominance-grid">
-                <div class="dominance-box">
-                    <div class="icon">🤖</div>
-                    <h4>AI Overview Position</h4>
-                    <p>BRG Mentor Program blog post featured in Google's AI-generated answer</p>
+        <!-- The Big Win -->
+        <div class="big-win">
+            <h2>The Transformation</h2>
+            <div class="position-change">
+                <div class="position-box">
+                    <div class="pos-label">BEFORE</div>
+                    <div class="pos-num">25.3</div>
+                    <div class="pos-page">Page 3 Average</div>
                 </div>
-                <div class="plus-sign">+</div>
-                <div class="dominance-box">
-                    <div class="icon">🥇</div>
-                    <h4>#1 Organic Position</h4>
-                    <p>"Which Brokerage in Cypress, TX is Best" captured top organic listing</p>
+                <div class="arrow-right">→</div>
+                <div class="position-box">
+                    <div class="pos-label">AFTER</div>
+                    <div class="pos-num">11.4</div>
+                    <div class="pos-page">Page 1 Average</div>
                 </div>
             </div>
-
-            <div class="query-box">
-                <div class="label">TARGET QUERY:</div>
-                "best mentor program for real estate agents in cypress"
-            </div>
-
-            <p style="margin-top: 20px; font-style: italic; opacity: 0.9;">This is the future of search visibility: appearing in AI answers while maintaining traditional rankings. Blair now owns the conversation before competitors are even considered.</p>
+            <p class="subtext">Blair Realty Group moved from buried on page 3 to visible on page 1 of Google search results - where 95% of clicks happen.</p>
         </div>
 
-        <!-- AI Search Visibility Actions Taken -->
+        <!-- Page Performance -->
         <div class="section">
-            <div class="section-title">AI Search Visibility Actions Taken</div>
+            <div class="section-title">Content Performance Wins</div>
+            <p style="margin-bottom: 20px; color: #666;">Impressions growth by page after AI Search Visibility implementation:</p>
 
-            <div class="action-card highlight">
-                <h3><span class="action-num">1</span> Created AI-Optimized Cornerstone Content</h3>
-                <p>Built authoritative pillar content structured specifically for AI comprehension and citation:</p>
-                <ul>
-                    <li><strong>BRG Mentor Program Page</strong> - 2,100 words covering the 12-session training program with clear H2/H3 hierarchy, FAQ section with 6 real questions, and definitive expertise statements</li>
-                    <li><strong>"Which Brokerage in Cypress is Best" Article</strong> - Comparison content answering the exact question prospects ask AI, with factual differentiators and clear conclusions</li>
-                    <li><strong>Homepage Entity Optimization</strong> - Restructured to establish Blair Realty Group as a clear entity with relationships to Houston, Cypress, agent mentorship, and specific team names</li>
-                </ul>
-                <span class="result-badge">Result: Featured in Google AI Overview</span>
-            </div>
-
-            <div class="action-card">
-                <h3><span class="action-num">2</span> Implemented Schema Markup for AI Discovery</h3>
-                <p>Added structured data that AI systems use to understand and cite content:</p>
-                <ul>
-                    <li><strong>FAQPage Schema</strong> on mentor program and key landing pages - signals Q&A content to AI</li>
-                    <li><strong>LocalBusiness Schema</strong> with service areas, founding date, and team size - establishes entity facts</li>
-                    <li><strong>Article Schema</strong> on blog posts with author, date modified, and topic classification</li>
-                    <li><strong>BreadcrumbList Schema</strong> showing site hierarchy AI can parse</li>
-                </ul>
-                <span class="result-badge">Result: Verified in Search Console Enhancements</span>
-            </div>
-
-            <div class="action-card">
-                <h3><span class="action-num">3</span> Built Connected Content Cluster</h3>
-                <p>Created supporting pages that link back to cornerstone content, establishing topical authority:</p>
-                <table class="content-table">
-                    <thead>
-                        <tr>
-                            <th>Page</th>
-                            <th>Purpose</th>
-                            <th>AI Question Answered</th>
-                            <th>Result</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>/join</strong></td>
-                            <td>Agent recruitment</td>
-                            <td>"How do I join Blair Realty Group?"</td>
-                            <td class="positive">+7.94%</td>
-                        </tr>
-                        <tr>
-                            <td><strong>/events</strong></td>
-                            <td>Community presence</td>
-                            <td>"What events does Blair Realty host?"</td>
-                            <td class="positive">+130.77%</td>
-                        </tr>
-                        <tr>
-                            <td><strong>/meet-our-agents</strong></td>
-                            <td>Team discovery</td>
-                            <td>"Who are the agents at Blair Realty?"</td>
-                            <td class="positive">High intent</td>
-                        </tr>
-                        <tr>
-                            <td><strong>/clay-residential</strong></td>
-                            <td>Neighborhood authority</td>
-                            <td>"Who sells homes in Clay Residential?"</td>
-                            <td class="positive">+71.43%</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="action-card">
-                <h3><span class="action-num">4</span> Optimized Content for AI Citation</h3>
-                <p>Restructured existing content to be more "citable" by AI systems:</p>
-                <ul>
-                    <li><strong>Direct Answer Format</strong> - Opening paragraphs now contain concise, quotable answers AI can extract</li>
-                    <li><strong>Definitive Statements</strong> - Changed "Blair Realty can help with..." to "Blair Realty Group specializes in agent mentorship in the Houston metro area"</li>
-                    <li><strong>Factual Claims</strong> - Added specific numbers: "12-session program," "serving Cypress since [year]," "X agents on staff"</li>
-                    <li><strong>Comparison Content</strong> - Created "vs" and "best of" content that AI uses when users ask comparison questions</li>
-                </ul>
-                <span class="result-badge">Result: +62.5% engagement time (content resonance)</span>
-            </div>
-
-            <div class="action-card">
-                <h3><span class="action-num">5</span> Weekly Search Console Validation</h3>
-                <p>Monitored indexing and AI visibility signals weekly:</p>
-                <ul>
-                    <li><strong>Coverage Report</strong> - Ensured all cornerstone and supporting pages indexed (fixed 3 "discovered not indexed" issues)</li>
-                    <li><strong>URL Inspection</strong> - Requested re-indexing after each content optimization</li>
-                    <li><strong>Performance Monitoring</strong> - Tracked new query impressions to identify AI-related searches</li>
-                    <li><strong>Schema Validation</strong> - Verified FAQ and LocalBusiness markup recognized in Enhancements</li>
-                </ul>
-            </div>
-
-            <div class="action-card">
-                <h3><span class="action-num">6</span> Entity Consistency Audit</h3>
-                <p>Ensured Blair Realty Group's entity signals were consistent across the web:</p>
-                <ul>
-                    <li><strong>Google Business Profile</strong> - Updated with matching NAP, service areas, and business description</li>
-                    <li><strong>Zillow/Realtor.com</strong> - Verified brokerage listings matched website entity information</li>
-                    <li><strong>Social Profiles</strong> - LinkedIn and Facebook descriptions aligned with AI-optimized homepage copy</li>
-                    <li><strong>Local Citations</strong> - Checked Houston Business Journal, Chamber listings for entity consistency</li>
-                </ul>
-            </div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Page</th>
+                        <th>Before</th>
+                        <th>After</th>
+                        <th>Growth</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>/blog/top-home-builders-in-cypress-tx-2025-guide/</strong></td>
+                        <td>104</td>
+                        <td>2,454</td>
+                        <td><span class="growth-huge">+2,260%</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>/neighborhoods/</strong></td>
+                        <td>583</td>
+                        <td>2,138</td>
+                        <td><span class="growth">+267%</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>/mentorship/</strong></td>
+                        <td>214</td>
+                        <td>708</td>
+                        <td><span class="growth">+231%</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>/cody-blair/</strong> (Agent Page)</td>
+                        <td>174</td>
+                        <td>757</td>
+                        <td><span class="growth">+335%</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>/podcast/</strong></td>
+                        <td>0</td>
+                        <td>454</td>
+                        <td><span class="new-badge">NEW</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>/clay-residential/</strong></td>
+                        <td>0</td>
+                        <td>371</td>
+                        <td><span class="new-badge">NEW</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>/blog/which-brokerage-in-cypress-tx-is-best.../</strong></td>
+                        <td>0</td>
+                        <td>232</td>
+                        <td><span class="new-badge">NEW</span></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
-        <!-- Performance Trend -->
+        <!-- Keyword Territory -->
         <div class="section">
-            <div class="section-title">3-Week Performance Trend</div>
-            <div class="chart-container">
-                <canvas id="trendChart"></canvas>
-            </div>
+            <div class="section-title">New Keyword Territory Captured</div>
+            <p style="margin-bottom: 20px; color: #666;">Non-branded queries Blair now ranks for that they didn't before:</p>
 
-            <div class="geo-section">
-                <h3>🗺️ Geographic Expansion Through AI Visibility</h3>
-                <p>AI visibility optimization opened new markets without additional ad spend - users in new areas discovered Blair through AI-powered search:</p>
-                <div class="geo-grid">
-                    <div class="geo-item">
-                        <div class="market">Houston (Core)</div>
-                        <div class="growth">+2.5%</div>
-                        <div class="note">Stable primary market</div>
-                    </div>
-                    <div class="geo-item">
-                        <div class="market">Dallas</div>
-                        <div class="growth">+19.7%</div>
-                        <div class="note">Expansion market</div>
-                    </div>
-                    <div class="geo-item">
-                        <div class="market">North Charleston, SC</div>
-                        <div class="growth">NEW</div>
-                        <div class="note">Out-of-state discovery</div>
-                    </div>
+            <div class="keyword-grid">
+                <div class="keyword-card">
+                    <div class="query">"home builders in cypress tx"</div>
+                    <div class="growth">+3,960%</div>
+                    <div class="detail">10 → 406 impressions</div>
+                </div>
+                <div class="keyword-card">
+                    <div class="query">"new home builders in cypress tx"</div>
+                    <div class="growth">+1,933%</div>
+                    <div class="detail">9 → 183 impressions</div>
+                </div>
+                <div class="keyword-card">
+                    <div class="query">"builders in cypress tx"</div>
+                    <div class="growth">+3,075%</div>
+                    <div class="detail">4 → 127 impressions</div>
                 </div>
             </div>
+
+            <table class="data-table" style="margin-top: 30px;">
+                <thead>
+                    <tr>
+                        <th>Query</th>
+                        <th>Impressions Before</th>
+                        <th>Impressions After</th>
+                        <th>Growth</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>"brianna bischoff real estate houston tx"</td>
+                        <td>0</td>
+                        <td>116</td>
+                        <td><span class="new-badge">NEW</span></td>
+                    </tr>
+                    <tr>
+                        <td>"blair realty group, real estate, houston"</td>
+                        <td>0</td>
+                        <td>115</td>
+                        <td><span class="new-badge">NEW</span></td>
+                    </tr>
+                    <tr>
+                        <td>"home builders cypress"</td>
+                        <td>6</td>
+                        <td>107</td>
+                        <td><span class="growth">+1,683%</span></td>
+                    </tr>
+                    <tr>
+                        <td>"patricia geyer"</td>
+                        <td>42</td>
+                        <td>216</td>
+                        <td><span class="growth">+414%</span></td>
+                    </tr>
+                    <tr>
+                        <td>"cody blair"</td>
+                        <td>25</td>
+                        <td>170</td>
+                        <td><span class="growth">+580%</span></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
-        <!-- What Made It Work -->
+        <!-- What We Did -->
         <div class="section">
-            <div class="section-title">Why These Actions Worked</div>
+            <div class="section-title">What We Implemented</div>
 
-            <div class="two-col">
-                <div class="action-card">
-                    <h3>Traditional SEO vs AI Visibility</h3>
-                    <table class="content-table" style="margin-top: 0;">
-                        <tr>
-                            <td style="text-decoration: line-through; color: #999;">Keyword density optimization</td>
-                            <td class="positive">→ Direct answer formatting</td>
-                        </tr>
-                        <tr>
-                            <td style="text-decoration: line-through; color: #999;">Backlink acquisition</td>
-                            <td class="positive">→ Entity consistency signals</td>
-                        </tr>
-                        <tr>
-                            <td style="text-decoration: line-through; color: #999;">Rank #1 for keywords</td>
-                            <td class="positive">→ Get cited as THE answer</td>
-                        </tr>
-                        <tr>
-                            <td style="text-decoration: line-through; color: #999;">Blog posts for traffic</td>
-                            <td class="positive">→ Resource pages for authority</td>
-                        </tr>
-                    </table>
+            <div class="actions-grid">
+                <div class="action-card featured">
+                    <h3><span class="action-num">1</span> AI-Optimized Content Strategy</h3>
+                    <p>Created cornerstone content designed for AI comprehension and citation. Built the "Top Home Builders in Cypress TX 2025 Guide" as a pillar page with clear H2/H3 structure, FAQ sections, and definitive expertise statements that AI systems can extract and cite.</p>
+                    <span class="action-result">Result: +2,260% impressions on guide page</span>
                 </div>
 
                 <div class="action-card">
-                    <h3>AI Citation Triggers</h3>
-                    <p>Content structured to trigger AI citation:</p>
-                    <ul>
-                        <li><strong>Definitive expertise</strong> - "Blair Realty Group is the leading..." not "Blair may be able to help..."</li>
-                        <li><strong>Specific facts</strong> - Numbers, dates, names that AI can quote</li>
-                        <li><strong>Question-answer format</strong> - FAQ sections AI can directly cite</li>
-                        <li><strong>Comparison conclusions</strong> - Clear "best for X" statements</li>
-                    </ul>
+                    <h3><span class="action-num">2</span> Geographic Content Expansion</h3>
+                    <p>Built neighborhood-specific pages targeting submarkets: Clay Residential, Houston metro areas, and surrounding communities with localized content.</p>
+                    <span class="action-result">Result: /neighborhoods/ +267%</span>
+                </div>
+
+                <div class="action-card">
+                    <h3><span class="action-num">3</span> Agent Authority Building</h3>
+                    <p>Optimized individual agent pages with structured bios, expertise statements, and local market credentials that establish each agent as an entity.</p>
+                    <span class="action-result">Result: Agent pages +335% avg</span>
+                </div>
+
+                <div class="action-card">
+                    <h3><span class="action-num">4</span> Schema Markup Implementation</h3>
+                    <p>Added FAQPage, LocalBusiness, Article, and BreadcrumbList schema across key pages to help AI systems understand and cite content.</p>
+                    <span class="action-result">Result: Enhanced search features</span>
+                </div>
+
+                <div class="action-card">
+                    <h3><span class="action-num">5</span> Content Cluster Architecture</h3>
+                    <p>Connected supporting pages (mentorship, podcast, agent recruitment) back to cornerstone content, establishing topical authority signals.</p>
+                    <span class="action-result">Result: /mentorship/ +231%</span>
+                </div>
+
+                <div class="action-card">
+                    <h3><span class="action-num">6</span> Search Console Optimization</h3>
+                    <p>Weekly validation of indexing status, fixed "discovered not indexed" issues, and requested re-indexing after content optimizations.</p>
+                    <span class="action-result">Result: 1,353 keywords ranking</span>
                 </div>
             </div>
         </div>
 
-        <div class="takeaway-box">
-            <h3>The Blok.co Total Search Framework</h3>
-            <div class="takeaway-grid">
-                <div class="takeaway-item">
-                    <div class="num">1</div>
-                    <div class="title">AI-First Content</div>
-                    <div class="desc">Structure content for AI comprehension: direct answers, definitive statements, citable facts, FAQ sections with schema</div>
+        <!-- Before/After Comparison -->
+        <div class="section">
+            <div class="section-title">Before & After Comparison</div>
+
+            <div class="comparison-grid">
+                <div class="comparison-box">
+                    <h4>Before (Aug - Sep 2025)</h4>
+                    <div class="metrics">
+                        <div class="metric-row">
+                            <span class="label">Organic Clicks</span>
+                            <span class="value">1.31K</span>
+                        </div>
+                        <div class="metric-row">
+                            <span class="label">Impressions</span>
+                            <span class="value">28.6K</span>
+                        </div>
+                        <div class="metric-row">
+                            <span class="label">Avg. CTR</span>
+                            <span class="value">4.6%</span>
+                        </div>
+                        <div class="metric-row">
+                            <span class="label">Avg. Position</span>
+                            <span class="value">25.3</span>
+                        </div>
+                        <div class="metric-row">
+                            <span class="label">Total Events</span>
+                            <span class="value">928K</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="takeaway-item">
-                    <div class="num">2</div>
-                    <div class="title">Entity Authority</div>
-                    <div class="desc">Build consistent entity signals across web properties: GBP, social, directories all saying the same thing</div>
-                </div>
-                <div class="takeaway-item">
-                    <div class="num">3</div>
-                    <div class="title">Validate & Iterate</div>
-                    <div class="desc">Weekly Search Console checks, AI response monitoring, and content optimization based on what's getting cited</div>
+
+                <div class="comparison-box" style="background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border: 2px solid #10b981;">
+                    <h4 style="color: #059669;">After (Oct - Nov 2025)</h4>
+                    <div class="metrics">
+                        <div class="metric-row">
+                            <span class="label">Organic Clicks</span>
+                            <span class="value">1.52K</span>
+                            <span class="change">+16%</span>
+                        </div>
+                        <div class="metric-row">
+                            <span class="label">Impressions</span>
+                            <span class="value">28.8K</span>
+                            <span class="change">+0.7%</span>
+                        </div>
+                        <div class="metric-row">
+                            <span class="label">Avg. CTR</span>
+                            <span class="value">5.3%</span>
+                            <span class="change">+15%</span>
+                        </div>
+                        <div class="metric-row">
+                            <span class="label">Avg. Position</span>
+                            <span class="value">11.4</span>
+                            <span class="change">+55%</span>
+                        </div>
+                        <div class="metric-row">
+                            <span class="label">Total Events</span>
+                            <span class="value">1.1M</span>
+                            <span class="change">+20%</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
+        <!-- The Takeaway -->
+        <div class="takeaway">
+            <h3>The Bottom Line</h3>
+            <p>In 60 days, Blair Realty Group went from invisible (page 3) to discoverable (page 1) for their target market. They now rank for 1,353 keywords and capture traffic for searches they never appeared for before.</p>
+
+            <div class="takeaway-stats">
+                <div class="takeaway-stat">
+                    <div class="num">55%</div>
+                    <div class="label">Position Improvement</div>
+                </div>
+                <div class="takeaway-stat">
+                    <div class="num">16%</div>
+                    <div class="label">More Clicks</div>
+                </div>
+                <div class="takeaway-stat">
+                    <div class="num">20%</div>
+                    <div class="label">More Events</div>
+                </div>
+                <div class="takeaway-stat">
+                    <div class="num">2,260%</div>
+                    <div class="label">Top Content Growth</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
         <div class="footer">
-            <p style="font-style: italic; margin-bottom: 15px;">"AI isn't replacing realtors. But realtors who understand AI will replace those who don't."</p>
-            <p><span class="branding">Blok.co</span> | <span class="url">Real Estate Analytics & AI Visibility</span></p>
+            <p style="font-style: italic; margin-bottom: 15px;">"The best time to optimize for AI search was yesterday. The second best time is today."</p>
+            <p><span class="branding">Blok.co</span> | <span class="url">Real Estate Analytics & AI Search Visibility</span></p>
         </div>
     </div>
-
-    <script>
-        const trendCtx = document.getElementById('trendChart').getContext('2d');
-        new Chart(trendCtx, {
-            type: 'line',
-            data: {
-                labels: ['Week 1 (Nov 3-9)', 'Week 2 (Nov 10-16)', 'Week 3 (Nov 17-23)'],
-                datasets: [{
-                    label: 'Organic Search Sessions',
-                    data: [295, 256, 340],
-                    borderColor: '#10b981',
-                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                    borderWidth: 3,
-                    fill: true,
-                    tension: 0.4,
-                    pointRadius: 6,
-                    pointHoverRadius: 8
-                }, {
-                    label: 'Total Sessions',
-                    data: [642, 626, 694],
-                    borderColor: '#00d4ff',
-                    backgroundColor: 'rgba(0, 212, 255, 0.1)',
-                    borderWidth: 3,
-                    fill: true,
-                    tension: 0.4,
-                    pointRadius: 6,
-                    pointHoverRadius: 8
-                }, {
-                    label: 'Avg Engagement Time (s)',
-                    data: [32, 47.4, 52],
-                    borderColor: '#f59e0b',
-                    backgroundColor: 'rgba(245, 158, 11, 0.1)',
-                    borderWidth: 3,
-                    fill: false,
-                    tension: 0.4,
-                    pointRadius: 6,
-                    pointHoverRadius: 8,
-                    yAxisID: 'y1'
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                interaction: { mode: 'index', intersect: false },
-                scales: {
-                    y: {
-                        type: 'linear',
-                        display: true,
-                        position: 'left',
-                        title: { display: true, text: 'Sessions' }
-                    },
-                    y1: {
-                        type: 'linear',
-                        display: true,
-                        position: 'right',
-                        title: { display: true, text: 'Engagement Time (s)' },
-                        grid: { drawOnChartArea: false }
-                    }
-                },
-                plugins: { legend: { position: 'top' } }
-            }
-        });
-    </script>
 </body>
 </html>
