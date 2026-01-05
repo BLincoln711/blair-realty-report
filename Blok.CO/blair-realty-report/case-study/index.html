@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Search Visibility for Realtors | Blok.co</title>
+    <style>
+        @page {
+            size: letter;
+            margin: 0.4in;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: 10px;
+            line-height: 1.4;
+            color: #1a1a2e;
+            max-width: 8.5in;
+            margin: 0 auto;
+            padding: 0.3in;
+        }
+        .header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: white;
+            padding: 20px 25px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header h1 {
+            font-size: 22px;
+            margin-bottom: 4px;
+        }
+        .header .subtitle {
+            font-size: 11px;
+            color: #00d4ff;
+        }
+        .header .blok-badge {
+            background: rgba(0,212,255,0.2);
+            border: 1px solid rgba(0,212,255,0.4);
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 10px;
+            color: #00d4ff;
+        }
+        .results-banner {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            text-align: center;
+        }
+        .results-banner .stat {
+            border-right: 1px solid rgba(255,255,255,0.2);
+        }
+        .results-banner .stat:last-child {
+            border-right: none;
+        }
+        .results-banner .number {
+            font-size: 26px;
+            font-weight: 700;
+        }
+        .results-banner .label {
+            font-size: 9px;
+            opacity: 0.9;
+            margin-top: 2px;
+        }
+        .case-study-label {
+            text-align: center;
+            font-size: 9px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+        .case-study-label strong {
+            color: #1a1a2e;
+        }
+        .section-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: #1a1a2e;
+            border-left: 4px solid #00d4ff;
+            padding-left: 8px;
+            margin-bottom: 10px;
+            margin-top: 5px;
+        }
+        .methodology {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .methodology-grid {
+            display: grid;
+            grid-template-columns: 1fr 40px 1fr 40px 1fr;
+            align-items: center;
+            gap: 10px;
+        }
+        .method-step {
+            background: white;
+            border: 2px solid #1a1a2e;
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+        }
+        .method-step.highlight {
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%);
+            color: white;
+            border-color: #00d4ff;
+        }
+        .method-step .step-num {
+            background: #00d4ff;
+            color: #1a1a2e;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 10px;
+            margin-bottom: 6px;
+        }
+        .method-step.highlight .step-num {
+            background: #00d4ff;
+        }
+        .method-step h4 {
+            font-size: 11px;
+            margin-bottom: 4px;
+        }
+        .method-step p {
+            font-size: 8px;
+            color: #666;
+            line-height: 1.3;
+        }
+        .method-step.highlight p {
+            color: rgba(255,255,255,0.8);
+        }
+        .arrow {
+            text-align: center;
+            color: #00d4ff;
+            font-size: 20px;
+        }
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .cornerstone-box {
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+        }
+        .cornerstone-box h3 {
+            color: #00d4ff;
+            font-size: 11px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .cornerstone-box h3::before {
+            content: "1";
+            background: #00d4ff;
+            color: #1a1a2e;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 10px;
+        }
+        .spec-list {
+            list-style: none;
+            padding: 0;
+        }
+        .spec-list li {
+            padding: 4px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-size: 9px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .spec-list li:last-child {
+            border-bottom: none;
+        }
+        .spec-list .spec-label {
+            color: rgba(255,255,255,0.7);
+        }
+        .spec-list .spec-value {
+            color: #00d4ff;
+            font-weight: 600;
+        }
+        .connected-box {
+            background: #f0f9ff;
+            border: 2px solid #00d4ff;
+            padding: 15px;
+            border-radius: 10px;
+        }
+        .connected-box h3 {
+            color: #0369a1;
+            font-size: 11px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .connected-box h3::before {
+            content: "2";
+            background: #00d4ff;
+            color: #1a1a2e;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 10px;
+        }
+        .connected-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+        }
+        .connected-item {
+            background: white;
+            border: 1px solid #0ea5e9;
+            border-radius: 6px;
+            padding: 8px;
+            font-size: 9px;
+        }
+        .connected-item .page {
+            font-weight: 600;
+            color: #0369a1;
+        }
+        .connected-item .result {
+            color: #10b981;
+            font-weight: 600;
+        }
+        .validation-section {
+            background: #f0fdf4;
+            border: 2px solid #10b981;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .validation-section h3 {
+            color: #065f46;
+            font-size: 11px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .validation-section h3::before {
+            content: "3";
+            background: #10b981;
+            color: white;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 10px;
+        }
+        .validation-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        .validation-item {
+            background: white;
+            border: 1px solid #10b981;
+            border-radius: 6px;
+            padding: 10px;
+            text-align: center;
+        }
+        .validation-item .icon {
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+        .validation-item .title {
+            font-size: 9px;
+            font-weight: 600;
+            color: #065f46;
+            margin-bottom: 2px;
+        }
+        .validation-item .desc {
+            font-size: 8px;
+            color: #666;
+        }
+        .geographic-wins {
+            background: #fef3c7;
+            border: 2px solid #f59e0b;
+            border-radius: 10px;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+        }
+        .geographic-wins h3 {
+            color: #92400e;
+            font-size: 11px;
+            margin-bottom: 8px;
+        }
+        .geo-grid {
+            display: flex;
+            gap: 15px;
+            justify-content: space-around;
+        }
+        .geo-item {
+            text-align: center;
+        }
+        .geo-item .market {
+            font-size: 10px;
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+        .geo-item .growth {
+            font-size: 14px;
+            font-weight: 700;
+            color: #10b981;
+        }
+        .geo-item .note {
+            font-size: 8px;
+            color: #666;
+        }
+        .takeaway-box {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 12px;
+        }
+        .takeaway-box h3 {
+            color: #00d4ff;
+            font-size: 11px;
+            margin-bottom: 8px;
+        }
+        .takeaway-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+        .takeaway-item {
+            text-align: center;
+        }
+        .takeaway-item .num {
+            background: #00d4ff;
+            color: #1a1a2e;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 11px;
+            margin-bottom: 6px;
+        }
+        .takeaway-item .title {
+            font-size: 10px;
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+        .takeaway-item .desc {
+            font-size: 8px;
+            opacity: 0.8;
+            line-height: 1.3;
+        }
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 10px;
+            border-top: 2px solid #1a1a2e;
+        }
+        .footer .tagline {
+            font-style: italic;
+            color: #666;
+            font-size: 10px;
+        }
+        .footer .branding {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .footer .blok {
+            font-weight: 700;
+            color: #1a1a2e;
+            font-size: 12px;
+        }
+        .footer .url {
+            color: #00d4ff;
+            font-size: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div>
+            <h1>AI Search Visibility for Real Estate</h1>
+            <div class="subtitle">How We Drove +32.8% Organic Growth in One Week</div>
+        </div>
+        <div class="blok-badge">Powered by Blok.co</div>
+    </div>
+
+    <div class="results-banner">
+        <div class="stat">
+            <div class="number">+32.8%</div>
+            <div class="label">Organic Search Growth</div>
+        </div>
+        <div class="stat">
+            <div class="number">59.4%</div>
+            <div class="label">Engagement Rate</div>
+        </div>
+        <div class="stat">
+            <div class="number">+130%</div>
+            <div class="label">Events Page Traffic</div>
+        </div>
+        <div class="stat">
+            <div class="number">+800%</div>
+            <div class="label">New Market Discovery</div>
+        </div>
+    </div>
+    <div class="case-study-label"><strong>Case Study: Blair Realty Group</strong> | Houston Metro | Nov 17-23, 2025 vs Prior Week</div>
+
+    <div class="section-title">The Methodology: Cornerstone + Connected Content + Validation</div>
+
+    <div class="methodology">
+        <div class="methodology-grid">
+            <div class="method-step highlight">
+                <div class="step-num">1</div>
+                <h4>Cornerstone Page</h4>
+                <p>One authoritative hub page with full specs</p>
+            </div>
+            <div class="arrow">→</div>
+            <div class="method-step">
+                <div class="step-num">2</div>
+                <h4>Connected Pieces</h4>
+                <p>Supporting pages that link back to cornerstone</p>
+            </div>
+            <div class="arrow">→</div>
+            <div class="method-step">
+                <div class="step-num">3</div>
+                <h4>Search Console Validation</h4>
+                <p>Weekly monitoring & optimization cycle</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="two-col">
+        <div class="cornerstone-box">
+            <h3>Cornerstone Page Specs</h3>
+            <ul class="spec-list">
+                <li><span class="spec-label">Word Count</span><span class="spec-value">1,500 - 3,000 words</span></li>
+                <li><span class="spec-label">Structure</span><span class="spec-value">H2/H3 hierarchy AI can parse</span></li>
+                <li><span class="spec-label">FAQ Section</span><span class="spec-value">5-8 real questions</span></li>
+                <li><span class="spec-label">Schema Markup</span><span class="spec-value">FAQ + LocalBusiness</span></li>
+                <li><span class="spec-label">Internal Links</span><span class="spec-value">To all supporting pages</span></li>
+                <li><span class="spec-label">External Citations</span><span class="spec-value">1-3 authoritative sources</span></li>
+                <li><span class="spec-label">Freshness Signal</span><span class="spec-value">"Last updated" visible</span></li>
+            </ul>
+        </div>
+        <div class="connected-box">
+            <h3>Connected Pieces (Blair Example)</h3>
+            <div class="connected-grid">
+                <div class="connected-item">
+                    <div class="page">/join</div>
+                    <div>Agent recruitment</div>
+                    <div class="result">+7.94%</div>
+                </div>
+                <div class="connected-item">
+                    <div class="page">/events</div>
+                    <div>Community events</div>
+                    <div class="result">+130.77%</div>
+                </div>
+                <div class="connected-item">
+                    <div class="page">/meet-our-agents</div>
+                    <div>Team profiles</div>
+                    <div class="result">High intent traffic</div>
+                </div>
+                <div class="connected-item">
+                    <div class="page">/clay-residential</div>
+                    <div>Neighborhood focus</div>
+                    <div class="result">+71.43%</div>
+                </div>
+            </div>
+            <p style="font-size: 8px; color: #666; margin-top: 8px; text-align: center;">Each page: 500-1,000 words | Answers ONE question | Links back to homepage</p>
+        </div>
+    </div>
+
+    <div class="validation-section">
+        <h3>Search Console Validation (Weekly Cycle)</h3>
+        <div class="validation-grid">
+            <div class="validation-item">
+                <div class="icon">📊</div>
+                <div class="title">Coverage Report</div>
+                <div class="desc">Check indexing errors, fix "not indexed" pages</div>
+            </div>
+            <div class="validation-item">
+                <div class="icon">📈</div>
+                <div class="title">Performance</div>
+                <div class="desc">Track impressions, clicks, emerging queries</div>
+            </div>
+            <div class="validation-item">
+                <div class="icon">🔍</div>
+                <div class="title">URL Inspection</div>
+                <div class="desc">Request indexing after content updates</div>
+            </div>
+            <div class="validation-item">
+                <div class="icon">✅</div>
+                <div class="title">Enhancements</div>
+                <div class="desc">Verify FAQ & LocalBusiness schema valid</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="geographic-wins">
+        <h3>Unexpected Win: Geographic Expansion Through AI Visibility</h3>
+        <div class="geo-grid">
+            <div class="geo-item">
+                <div class="market">Houston (Core)</div>
+                <div class="growth">+2.5%</div>
+                <div class="note">Stable primary market</div>
+            </div>
+            <div class="geo-item">
+                <div class="market">Dallas</div>
+                <div class="growth">+19.7%</div>
+                <div class="note">Expansion market</div>
+            </div>
+            <div class="geo-item">
+                <div class="market">Iowa Colony</div>
+                <div class="growth">+800%</div>
+                <div class="note">Emerging submarket</div>
+            </div>
+            <div class="geo-item">
+                <div class="market">North Charleston, SC</div>
+                <div class="growth">NEW</div>
+                <div class="note">Discovered market</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="takeaway-box">
+        <h3>3 Actions To Start This Week</h3>
+        <div class="takeaway-grid">
+            <div class="takeaway-item">
+                <div class="num">1</div>
+                <div class="title">Audit Your Entity</div>
+                <div class="desc">Google yourself. Is name/address/phone consistent on GBP, Zillow, LinkedIn?</div>
+            </div>
+            <div class="takeaway-item">
+                <div class="num">2</div>
+                <div class="title">Create One Cornerstone</div>
+                <div class="desc">"[Your City] Home Buying Guide" - 1,500+ words with FAQ section</div>
+            </div>
+            <div class="takeaway-item">
+                <div class="num">3</div>
+                <div class="title">Validate Weekly</div>
+                <div class="desc">15 min in Search Console + ask ChatGPT "best realtors in [city]"</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="tagline">"AI isn't replacing realtors. But realtors who understand AI will replace those who don't."</div>
+        <div class="branding">
+            <span class="blok">Blok.co</span>
+            <span class="url">Real Estate Analytics</span>
+        </div>
+    </div>
+</body>
+</html>
