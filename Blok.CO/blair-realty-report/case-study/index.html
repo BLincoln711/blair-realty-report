@@ -3,114 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Search Visibility for Realtors | Blok.co</title>
+    <title>Case Study: Blair Realty Group AI Search Visibility | Blok.co</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <style>
-        @page {
-            size: letter;
-            margin: 0.4in;
-        }
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            font-size: 10px;
-            line-height: 1.4;
-            color: #1a1a2e;
-            max-width: 8.5in;
-            margin: 0 auto;
-            padding: 0.3in;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
         }
+        .container { max-width: 1200px; margin: 0 auto; padding: 30px 20px; }
         .header {
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
             color: white;
-            padding: 20px 25px;
-            border-radius: 10px;
-            margin-bottom: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            padding: 50px 40px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
         }
-        .header h1 {
-            font-size: 22px;
-            margin-bottom: 4px;
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0; right: 0;
+            width: 400px; height: 100%;
+            background: linear-gradient(135deg, rgba(0,212,255,0.1) 0%, rgba(0,212,255,0.05) 100%);
+            clip-path: polygon(100% 0, 0% 100%, 100% 100%);
         }
-        .header .subtitle {
-            font-size: 11px;
-            color: #00d4ff;
-        }
-        .header .blok-badge {
+        .header-content { position: relative; z-index: 1; }
+        .header .label {
+            display: inline-block;
             background: rgba(0,212,255,0.2);
             border: 1px solid rgba(0,212,255,0.4);
-            padding: 4px 12px;
-            border-radius: 15px;
-            font-size: 10px;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
             color: #00d4ff;
+            margin-bottom: 15px;
         }
-        .results-banner {
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .header .subtitle { font-size: 1.3em; color: #00d4ff; margin-bottom: 10px; }
+        .header .meta { opacity: 0.8; font-size: 0.95em; }
+        .header .blok-badge {
+            position: absolute; top: 30px; right: 30px;
+            background: rgba(0,212,255,0.2);
+            border: 1px solid rgba(0,212,255,0.4);
+            padding: 8px 20px;
+            border-radius: 25px;
+            color: #00d4ff;
+            font-size: 0.9em;
+        }
+        .results-hero {
             background: linear-gradient(135deg, #10b981 0%, #059669 100%);
             color: white;
-            padding: 15px 20px;
-            border-radius: 10px;
-            margin-bottom: 15px;
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-            text-align: center;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 30px;
         }
-        .results-banner .stat {
-            border-right: 1px solid rgba(255,255,255,0.2);
-        }
-        .results-banner .stat:last-child {
-            border-right: none;
-        }
-        .results-banner .number {
-            font-size: 26px;
-            font-weight: 700;
-        }
-        .results-banner .label {
-            font-size: 9px;
-            opacity: 0.9;
-            margin-top: 2px;
-        }
-        .case-study-label {
-            text-align: center;
-            font-size: 9px;
-            color: #666;
-            margin-bottom: 15px;
-        }
-        .case-study-label strong {
-            color: #1a1a2e;
+        .results-hero h2 { text-align: center; margin-bottom: 30px; font-size: 1.5em; }
+        .results-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        .result-stat { text-align: center; padding: 20px; background: rgba(255,255,255,0.1); border-radius: 10px; }
+        .result-stat .number { font-size: 2.8em; font-weight: 700; }
+        .result-stat .label { font-size: 0.9em; opacity: 0.9; margin-top: 5px; }
+        .result-stat .detail { font-size: 0.8em; opacity: 0.7; margin-top: 5px; }
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 35px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
         .section-title {
-            font-size: 12px;
+            font-size: 1.4em;
             font-weight: 700;
             color: #1a1a2e;
-            border-left: 4px solid #00d4ff;
-            padding-left: 8px;
-            margin-bottom: 10px;
-            margin-top: 5px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
-        .methodology {
+        .section-title::before {
+            content: '';
+            width: 5px; height: 28px;
+            background: linear-gradient(180deg, #00d4ff 0%, #0f3460 100%);
+            border-radius: 3px;
+        }
+        .methodology-flow {
+            display: grid;
+            grid-template-columns: 1fr 60px 1fr 60px 1fr;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .method-step {
             background: #f8fafc;
             border: 2px solid #e2e8f0;
             border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 15px;
-        }
-        .methodology-grid {
-            display: grid;
-            grid-template-columns: 1fr 40px 1fr 40px 1fr;
-            align-items: center;
-            gap: 10px;
-        }
-        .method-step {
-            background: white;
-            border: 2px solid #1a1a2e;
-            border-radius: 8px;
-            padding: 12px;
+            padding: 25px 20px;
             text-align: center;
         }
         .method-step.highlight {
@@ -121,469 +111,602 @@
         .method-step .step-num {
             background: #00d4ff;
             color: #1a1a2e;
-            width: 20px;
-            height: 20px;
+            width: 30px; height: 30px;
             border-radius: 50%;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 10px;
-            margin-bottom: 6px;
+            margin-bottom: 12px;
         }
-        .method-step.highlight .step-num {
-            background: #00d4ff;
-        }
-        .method-step h4 {
-            font-size: 11px;
-            margin-bottom: 4px;
-        }
-        .method-step p {
-            font-size: 8px;
-            color: #666;
-            line-height: 1.3;
-        }
-        .method-step.highlight p {
-            color: rgba(255,255,255,0.8);
-        }
-        .arrow {
-            text-align: center;
-            color: #00d4ff;
-            font-size: 20px;
-        }
-        .two-col {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
+        .method-step h4 { font-size: 1.1em; margin-bottom: 8px; }
+        .method-step p { font-size: 0.85em; color: #666; }
+        .method-step.highlight p { color: rgba(255,255,255,0.8); }
+        .arrow { text-align: center; color: #00d4ff; font-size: 28px; }
+        .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
         .cornerstone-box {
             background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%);
             color: white;
-            padding: 15px;
+            padding: 25px;
             border-radius: 10px;
         }
         .cornerstone-box h3 {
             color: #00d4ff;
-            font-size: 11px;
-            margin-bottom: 10px;
+            font-size: 1.1em;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 10px;
         }
         .cornerstone-box h3::before {
             content: "1";
             background: #00d4ff;
             color: #1a1a2e;
-            width: 18px;
-            height: 18px;
+            width: 24px; height: 24px;
             border-radius: 50%;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 10px;
+            font-size: 0.85em;
         }
-        .spec-list {
-            list-style: none;
-            padding: 0;
-        }
+        .spec-list { list-style: none; }
         .spec-list li {
-            padding: 4px 0;
+            padding: 10px 0;
             border-bottom: 1px solid rgba(255,255,255,0.1);
-            font-size: 9px;
             display: flex;
             justify-content: space-between;
+            font-size: 0.95em;
         }
-        .spec-list li:last-child {
-            border-bottom: none;
-        }
-        .spec-list .spec-label {
-            color: rgba(255,255,255,0.7);
-        }
-        .spec-list .spec-value {
-            color: #00d4ff;
-            font-weight: 600;
-        }
+        .spec-list li:last-child { border-bottom: none; }
+        .spec-list .spec-label { color: rgba(255,255,255,0.7); }
+        .spec-list .spec-value { color: #00d4ff; font-weight: 600; }
         .connected-box {
             background: #f0f9ff;
             border: 2px solid #00d4ff;
-            padding: 15px;
+            padding: 25px;
             border-radius: 10px;
         }
         .connected-box h3 {
             color: #0369a1;
-            font-size: 11px;
-            margin-bottom: 10px;
+            font-size: 1.1em;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 10px;
         }
         .connected-box h3::before {
             content: "2";
             background: #00d4ff;
             color: #1a1a2e;
-            width: 18px;
-            height: 18px;
+            width: 24px; height: 24px;
             border-radius: 50%;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 10px;
+            font-size: 0.85em;
         }
-        .connected-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 6px;
-        }
+        .connected-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .connected-item {
             background: white;
             border: 1px solid #0ea5e9;
-            border-radius: 6px;
-            padding: 8px;
-            font-size: 9px;
+            border-radius: 8px;
+            padding: 15px;
         }
-        .connected-item .page {
+        .connected-item .page { font-weight: 600; color: #0369a1; font-size: 0.95em; }
+        .connected-item .desc { font-size: 0.85em; color: #666; margin: 5px 0; }
+        .connected-item .result { color: #10b981; font-weight: 600; font-size: 0.9em; }
+        .chart-container { position: relative; height: 350px; margin: 20px 0; }
+        .trend-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .trend-table th, .trend-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .trend-table th {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
             font-weight: 600;
-            color: #0369a1;
+            font-size: 0.9em;
         }
-        .connected-item .result {
-            color: #10b981;
-            font-weight: 600;
-        }
+        .trend-table th:first-child { border-radius: 8px 0 0 0; }
+        .trend-table th:last-child { border-radius: 0 8px 0 0; }
+        .trend-table tr:hover { background-color: #f9fafb; }
+        .positive { color: #10b981; font-weight: 600; }
+        .negative { color: #ef4444; font-weight: 600; }
+        .highlight-row { background: #f0fdf4 !important; }
         .validation-section {
             background: #f0fdf4;
             border: 2px solid #10b981;
             border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 15px;
+            padding: 25px;
+            margin-top: 25px;
         }
         .validation-section h3 {
             color: #065f46;
-            font-size: 11px;
-            margin-bottom: 10px;
+            font-size: 1.1em;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 10px;
         }
         .validation-section h3::before {
             content: "3";
             background: #10b981;
             color: white;
-            width: 18px;
-            height: 18px;
+            width: 24px; height: 24px;
             border-radius: 50%;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 10px;
+            font-size: 0.85em;
         }
-        .validation-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-        }
+        .validation-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; }
         .validation-item {
             background: white;
             border: 1px solid #10b981;
-            border-radius: 6px;
-            padding: 10px;
+            border-radius: 8px;
+            padding: 15px;
             text-align: center;
         }
-        .validation-item .icon {
-            font-size: 16px;
-            margin-bottom: 4px;
-        }
-        .validation-item .title {
-            font-size: 9px;
-            font-weight: 600;
-            color: #065f46;
-            margin-bottom: 2px;
-        }
-        .validation-item .desc {
-            font-size: 8px;
-            color: #666;
-        }
-        .geographic-wins {
-            background: #fef3c7;
+        .validation-item .icon { font-size: 24px; margin-bottom: 8px; }
+        .validation-item .title { font-size: 0.9em; font-weight: 600; color: #065f46; margin-bottom: 5px; }
+        .validation-item .desc { font-size: 0.8em; color: #666; }
+        .win-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fffbeb 100%);
             border: 2px solid #f59e0b;
             border-radius: 10px;
-            padding: 12px 15px;
-            margin-bottom: 15px;
+            padding: 25px;
+            margin-top: 25px;
         }
-        .geographic-wins h3 {
-            color: #92400e;
-            font-size: 11px;
-            margin-bottom: 8px;
+        .win-box h3 { color: #92400e; margin-bottom: 15px; }
+        .win-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        .win-item { text-align: center; }
+        .win-item .market { font-weight: 600; color: #1a1a2e; }
+        .win-item .growth { font-size: 1.5em; font-weight: 700; color: #10b981; }
+        .win-item .note { font-size: 0.8em; color: #666; }
+        .ai-win {
+            background: linear-gradient(135deg, #dbeafe 0%, #eff6ff 100%);
+            border: 2px solid #3b82f6;
+            border-radius: 10px;
+            padding: 25px;
+            margin-top: 25px;
         }
-        .geo-grid {
-            display: flex;
-            gap: 15px;
-            justify-content: space-around;
-        }
-        .geo-item {
-            text-align: center;
-        }
-        .geo-item .market {
-            font-size: 10px;
-            font-weight: 600;
-            color: #1a1a2e;
-        }
-        .geo-item .growth {
-            font-size: 14px;
-            font-weight: 700;
-            color: #10b981;
-        }
-        .geo-item .note {
-            font-size: 8px;
-            color: #666;
-        }
+        .ai-win h3 { color: #1e40af; margin-bottom: 15px; }
+        .ai-win p { color: #1e3a8a; margin-bottom: 10px; }
+        .ai-win ul { padding-left: 20px; color: #1e3a8a; }
+        .ai-win li { margin-bottom: 8px; }
         .takeaway-box {
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
             color: white;
-            padding: 15px 20px;
-            border-radius: 10px;
-            margin-bottom: 12px;
+            padding: 35px;
+            border-radius: 12px;
+            margin-top: 30px;
         }
-        .takeaway-box h3 {
-            color: #00d4ff;
-            font-size: 11px;
-            margin-bottom: 8px;
-        }
-        .takeaway-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-        }
-        .takeaway-item {
-            text-align: center;
-        }
+        .takeaway-box h3 { color: #00d4ff; font-size: 1.2em; margin-bottom: 25px; text-align: center; }
+        .takeaway-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
+        .takeaway-item { text-align: center; }
         .takeaway-item .num {
             background: #00d4ff;
             color: #1a1a2e;
-            width: 22px;
-            height: 22px;
+            width: 35px; height: 35px;
             border-radius: 50%;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 11px;
-            margin-bottom: 6px;
+            font-size: 1.1em;
+            margin-bottom: 12px;
         }
-        .takeaway-item .title {
-            font-size: 10px;
-            font-weight: 600;
-            margin-bottom: 3px;
-        }
-        .takeaway-item .desc {
-            font-size: 8px;
-            opacity: 0.8;
-            line-height: 1.3;
-        }
+        .takeaway-item .title { font-size: 1em; font-weight: 600; margin-bottom: 8px; }
+        .takeaway-item .desc { font-size: 0.9em; opacity: 0.8; line-height: 1.5; }
         .footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 10px;
-            border-top: 2px solid #1a1a2e;
+            text-align: center;
+            padding: 30px;
+            color: #6b7280;
+            font-size: 0.9em;
+            border-top: 2px solid #e5e7eb;
+            margin-top: 30px;
         }
-        .footer .tagline {
-            font-style: italic;
-            color: #666;
-            font-size: 10px;
-        }
-        .footer .branding {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .footer .blok {
-            font-weight: 700;
-            color: #1a1a2e;
-            font-size: 12px;
-        }
-        .footer .url {
-            color: #00d4ff;
-            font-size: 10px;
+        .footer .branding { font-weight: 700; color: #1a1a2e; font-size: 1.1em; }
+        .footer .url { color: #00d4ff; }
+        @media (max-width: 768px) {
+            .results-grid { grid-template-columns: repeat(2, 1fr); }
+            .methodology-flow { grid-template-columns: 1fr; }
+            .arrow { transform: rotate(90deg); }
+            .two-col { grid-template-columns: 1fr; }
+            .validation-grid, .win-grid, .takeaway-grid { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <div>
-            <h1>AI Search Visibility for Real Estate</h1>
-            <div class="subtitle">How We Drove +32.8% Organic Growth in One Week</div>
-        </div>
-        <div class="blok-badge">Powered by Blok.co</div>
-    </div>
-
-    <div class="results-banner">
-        <div class="stat">
-            <div class="number">+32.8%</div>
-            <div class="label">Organic Search Growth</div>
-        </div>
-        <div class="stat">
-            <div class="number">59.4%</div>
-            <div class="label">Engagement Rate</div>
-        </div>
-        <div class="stat">
-            <div class="number">+130%</div>
-            <div class="label">Events Page Traffic</div>
-        </div>
-        <div class="stat">
-            <div class="number">+800%</div>
-            <div class="label">New Market Discovery</div>
-        </div>
-    </div>
-    <div class="case-study-label"><strong>Case Study: Blair Realty Group</strong> | Houston Metro | Nov 17-23, 2025 vs Prior Week</div>
-
-    <div class="section-title">The Methodology: Cornerstone + Connected Content + Validation</div>
-
-    <div class="methodology">
-        <div class="methodology-grid">
-            <div class="method-step highlight">
-                <div class="step-num">1</div>
-                <h4>Cornerstone Page</h4>
-                <p>One authoritative hub page with full specs</p>
+    <div class="container">
+        <div class="header">
+            <div class="header-content">
+                <div class="label">CASE STUDY</div>
+                <h1>Blair Realty Group</h1>
+                <div class="subtitle">AI Search Visibility Transformation</div>
+                <div class="meta">Houston Metro Real Estate | November 2025 | 3-Week Program</div>
             </div>
-            <div class="arrow">→</div>
-            <div class="method-step">
-                <div class="step-num">2</div>
-                <h4>Connected Pieces</h4>
-                <p>Supporting pages that link back to cornerstone</p>
-            </div>
-            <div class="arrow">→</div>
-            <div class="method-step">
-                <div class="step-num">3</div>
-                <h4>Search Console Validation</h4>
-                <p>Weekly monitoring & optimization cycle</p>
-            </div>
+            <div class="blok-badge">Powered by Blok.co</div>
         </div>
-    </div>
 
-    <div class="two-col">
-        <div class="cornerstone-box">
-            <h3>Cornerstone Page Specs</h3>
-            <ul class="spec-list">
-                <li><span class="spec-label">Word Count</span><span class="spec-value">1,500 - 3,000 words</span></li>
-                <li><span class="spec-label">Structure</span><span class="spec-value">H2/H3 hierarchy AI can parse</span></li>
-                <li><span class="spec-label">FAQ Section</span><span class="spec-value">5-8 real questions</span></li>
-                <li><span class="spec-label">Schema Markup</span><span class="spec-value">FAQ + LocalBusiness</span></li>
-                <li><span class="spec-label">Internal Links</span><span class="spec-value">To all supporting pages</span></li>
-                <li><span class="spec-label">External Citations</span><span class="spec-value">1-3 authoritative sources</span></li>
-                <li><span class="spec-label">Freshness Signal</span><span class="spec-value">"Last updated" visible</span></li>
-            </ul>
-        </div>
-        <div class="connected-box">
-            <h3>Connected Pieces (Blair Example)</h3>
-            <div class="connected-grid">
-                <div class="connected-item">
-                    <div class="page">/join</div>
-                    <div>Agent recruitment</div>
-                    <div class="result">+7.94%</div>
+        <div class="results-hero">
+            <h2>Program Results: November 3-23, 2025</h2>
+            <div class="results-grid">
+                <div class="result-stat">
+                    <div class="number">+15.3%</div>
+                    <div class="label">Organic Search Growth</div>
+                    <div class="detail">295 → 340 sessions</div>
                 </div>
-                <div class="connected-item">
-                    <div class="page">/events</div>
-                    <div>Community events</div>
-                    <div class="result">+130.77%</div>
+                <div class="result-stat">
+                    <div class="number">+62.5%</div>
+                    <div class="label">Engagement Time</div>
+                    <div class="detail">32s → 52s average</div>
                 </div>
-                <div class="connected-item">
-                    <div class="page">/meet-our-agents</div>
-                    <div>Team profiles</div>
-                    <div class="result">High intent traffic</div>
+                <div class="result-stat">
+                    <div class="number">+130%</div>
+                    <div class="label">Events Page Traffic</div>
+                    <div class="detail">Content strategy win</div>
                 </div>
-                <div class="connected-item">
-                    <div class="page">/clay-residential</div>
-                    <div>Neighborhood focus</div>
-                    <div class="result">+71.43%</div>
+                <div class="result-stat">
+                    <div class="number">4</div>
+                    <div class="label">New Markets Discovered</div>
+                    <div class="detail">Geographic expansion</div>
                 </div>
             </div>
-            <p style="font-size: 8px; color: #666; margin-top: 8px; text-align: center;">Each page: 500-1,000 words | Answers ONE question | Links back to homepage</p>
+        </div>
+
+        <div class="section">
+            <div class="section-title">The Methodology</div>
+            <div class="methodology-flow">
+                <div class="method-step highlight">
+                    <div class="step-num">1</div>
+                    <h4>Cornerstone Page</h4>
+                    <p>One authoritative hub page with full specs optimized for AI parsing</p>
+                </div>
+                <div class="arrow">→</div>
+                <div class="method-step">
+                    <div class="step-num">2</div>
+                    <h4>Connected Pieces</h4>
+                    <p>Supporting pages that link back to cornerstone, each answering one question</p>
+                </div>
+                <div class="arrow">→</div>
+                <div class="method-step">
+                    <div class="step-num">3</div>
+                    <h4>Search Console Validation</h4>
+                    <p>Weekly monitoring, indexing verification, and optimization cycle</p>
+                </div>
+            </div>
+
+            <div class="two-col">
+                <div class="cornerstone-box">
+                    <h3>Cornerstone Page Specs</h3>
+                    <ul class="spec-list">
+                        <li><span class="spec-label">Word Count</span><span class="spec-value">1,500 - 3,000 words</span></li>
+                        <li><span class="spec-label">Structure</span><span class="spec-value">H2/H3 hierarchy AI can parse</span></li>
+                        <li><span class="spec-label">FAQ Section</span><span class="spec-value">5-8 real questions answered</span></li>
+                        <li><span class="spec-label">Schema Markup</span><span class="spec-value">FAQ + LocalBusiness</span></li>
+                        <li><span class="spec-label">Internal Links</span><span class="spec-value">To all supporting pages</span></li>
+                        <li><span class="spec-label">External Citations</span><span class="spec-value">1-3 authoritative sources</span></li>
+                        <li><span class="spec-label">Freshness Signal</span><span class="spec-value">"Last updated" visible</span></li>
+                    </ul>
+                </div>
+                <div class="connected-box">
+                    <h3>Connected Pieces (Blair Implementation)</h3>
+                    <div class="connected-grid">
+                        <div class="connected-item">
+                            <div class="page">/join</div>
+                            <div class="desc">Agent recruitment</div>
+                            <div class="result">+7.94% sessions</div>
+                        </div>
+                        <div class="connected-item">
+                            <div class="page">/events</div>
+                            <div class="desc">Community events</div>
+                            <div class="result">+130.77% sessions</div>
+                        </div>
+                        <div class="connected-item">
+                            <div class="page">/meet-our-agents</div>
+                            <div class="desc">Team profiles</div>
+                            <div class="result">High intent traffic</div>
+                        </div>
+                        <div class="connected-item">
+                            <div class="page">/clay-residential</div>
+                            <div class="desc">Neighborhood focus</div>
+                            <div class="result">+71.43% sessions</div>
+                        </div>
+                    </div>
+                    <p style="font-size: 0.85em; color: #666; margin-top: 15px; text-align: center;">Each page: 500-1,000 words | Answers ONE question | Links back to homepage</p>
+                </div>
+            </div>
+
+            <div class="validation-section">
+                <h3>Search Console Validation (Weekly Cycle)</h3>
+                <div class="validation-grid">
+                    <div class="validation-item">
+                        <div class="icon">📊</div>
+                        <div class="title">Coverage Report</div>
+                        <div class="desc">Check indexing errors, fix "not indexed" pages</div>
+                    </div>
+                    <div class="validation-item">
+                        <div class="icon">📈</div>
+                        <div class="title">Performance</div>
+                        <div class="desc">Track impressions, clicks, emerging queries</div>
+                    </div>
+                    <div class="validation-item">
+                        <div class="icon">🔍</div>
+                        <div class="title">URL Inspection</div>
+                        <div class="desc">Request indexing after content updates</div>
+                    </div>
+                    <div class="validation-item">
+                        <div class="icon">✅</div>
+                        <div class="title">Enhancements</div>
+                        <div class="desc">Verify FAQ & LocalBusiness schema valid</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">3-Week Performance Trend</div>
+            <div class="chart-container">
+                <canvas id="trendChart"></canvas>
+            </div>
+            <table class="trend-table">
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Week 1 (Nov 3-9)</th>
+                        <th>Week 2 (Nov 10-16)</th>
+                        <th>Week 3 (Nov 17-23)</th>
+                        <th>Total Change</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Total Sessions</strong></td>
+                        <td>642</td>
+                        <td>626</td>
+                        <td>694</td>
+                        <td class="positive">+8.1%</td>
+                    </tr>
+                    <tr class="highlight-row">
+                        <td><strong>Organic Search Sessions</strong></td>
+                        <td>295</td>
+                        <td>256</td>
+                        <td>340</td>
+                        <td class="positive">+15.3%</td>
+                    </tr>
+                    <tr class="highlight-row">
+                        <td><strong>Avg Engagement Time</strong></td>
+                        <td>32s</td>
+                        <td>47.4s</td>
+                        <td>52s</td>
+                        <td class="positive">+62.5%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Engagement Rate</strong></td>
+                        <td>47.5%</td>
+                        <td>46.6%</td>
+                        <td>~50%</td>
+                        <td class="positive">+5%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Organic Engagement Rate</strong></td>
+                        <td>61.7%</td>
+                        <td>65.2%</td>
+                        <td>59.4%</td>
+                        <td>Consistently High</td>
+                    </tr>
+                    <tr>
+                        <td><strong>New Users</strong></td>
+                        <td>403</td>
+                        <td>432</td>
+                        <td>389</td>
+                        <td>Stable</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Key Wins</div>
+
+            <div class="ai-win">
+                <h3>🏆 Week 1: Total Search Dominance Achieved</h3>
+                <p><strong>Query: "best mentor program for real estate agents in cypress"</strong></p>
+                <ul>
+                    <li><strong>Google AI Overview:</strong> Blair Realty Group's BRG Mentor Program blog post featured prominently</li>
+                    <li><strong>#1 Organic Position:</strong> "Which Brokerage in Cypress, TX is Best" article captured top listing</li>
+                    <li><strong>Result:</strong> Blair Realty Group owns the entire search conversation for agent recruitment</li>
+                </ul>
+                <p style="margin-top: 15px; font-style: italic; opacity: 0.8;">This is the future of search visibility: appearing in AI Overviews while maintaining top organic rankings.</p>
+            </div>
+
+            <div class="win-box">
+                <h3>🗺️ Geographic Expansion Through AI Visibility</h3>
+                <p style="margin-bottom: 15px; color: #78350f;">AI visibility doesn't just improve existing markets - it opens new ones without additional ad spend.</p>
+                <div class="win-grid">
+                    <div class="win-item">
+                        <div class="market">Houston (Core)</div>
+                        <div class="growth">+2.5%</div>
+                        <div class="note">Stable primary market</div>
+                    </div>
+                    <div class="win-item">
+                        <div class="market">Dallas</div>
+                        <div class="growth">+19.7%</div>
+                        <div class="note">Expansion market</div>
+                    </div>
+                    <div class="win-item">
+                        <div class="market">Iowa Colony</div>
+                        <div class="growth">+800%</div>
+                        <div class="note">Emerging submarket</div>
+                    </div>
+                    <div class="win-item">
+                        <div class="market">North Charleston, SC</div>
+                        <div class="growth">NEW</div>
+                        <div class="note">Discovered market</div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="background: #f0fdf4; border: 2px solid #10b981; border-radius: 10px; padding: 25px; margin-top: 25px;">
+                <h3 style="color: #065f46; margin-bottom: 15px;">📊 Week 2: First Conversion Milestone</h3>
+                <ul style="color: #064e3b;">
+                    <li><strong>Agent Brand Awareness campaign delivered first tracked conversion</strong> at $31.82 CPA</li>
+                    <li>Paid Search engagement time increased <strong>245.8%</strong> (22s → 76.5s)</li>
+                    <li>Direct traffic surged <strong>+13.9%</strong> - indicating growing brand awareness</li>
+                </ul>
+            </div>
+
+            <div style="background: #dbeafe; border: 2px solid #3b82f6; border-radius: 10px; padding: 25px; margin-top: 25px;">
+                <h3 style="color: #1e40af; margin-bottom: 15px;">🚀 Week 3: Organic Search Breakthrough</h3>
+                <ul style="color: #1e3a8a;">
+                    <li>Organic search sessions surged <strong>+32.8%</strong> week-over-week (256 → 340)</li>
+                    <li>Events page traffic exploded <strong>+130.77%</strong> - content strategy validation</li>
+                    <li>Homepage traffic up <strong>+17.11%</strong> - brand awareness compounding</li>
+                    <li>Views per session increased <strong>+11.38%</strong> - users exploring more content</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Traffic Quality: Organic vs Other Channels</div>
+            <div class="chart-container">
+                <canvas id="qualityChart"></canvas>
+            </div>
+            <p style="text-align: center; color: #666; margin-top: 15px;">Organic search consistently delivers the highest engagement quality - justifying the investment in AI visibility optimization.</p>
+        </div>
+
+        <div class="takeaway-box">
+            <h3>The Blok.co AI Visibility Framework</h3>
+            <div class="takeaway-grid">
+                <div class="takeaway-item">
+                    <div class="num">1</div>
+                    <div class="title">Cornerstone Content</div>
+                    <div class="desc">Build one authoritative page with full specs: 1,500-3,000 words, H2/H3 structure, FAQ section, schema markup</div>
+                </div>
+                <div class="takeaway-item">
+                    <div class="num">2</div>
+                    <div class="title">Connected Pieces</div>
+                    <div class="desc">Create 5-10 supporting pages (500-1,000 words each) that link back to cornerstone and answer specific questions</div>
+                </div>
+                <div class="takeaway-item">
+                    <div class="num">3</div>
+                    <div class="title">Validate Weekly</div>
+                    <div class="desc">15 minutes in Search Console: check coverage, monitor performance, request indexing, verify schema</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p style="font-style: italic; margin-bottom: 15px;">"AI isn't replacing realtors. But realtors who understand AI will replace those who don't."</p>
+            <p><span class="branding">Blok.co</span> | <span class="url">Real Estate Analytics</span></p>
         </div>
     </div>
 
-    <div class="validation-section">
-        <h3>Search Console Validation (Weekly Cycle)</h3>
-        <div class="validation-grid">
-            <div class="validation-item">
-                <div class="icon">📊</div>
-                <div class="title">Coverage Report</div>
-                <div class="desc">Check indexing errors, fix "not indexed" pages</div>
-            </div>
-            <div class="validation-item">
-                <div class="icon">📈</div>
-                <div class="title">Performance</div>
-                <div class="desc">Track impressions, clicks, emerging queries</div>
-            </div>
-            <div class="validation-item">
-                <div class="icon">🔍</div>
-                <div class="title">URL Inspection</div>
-                <div class="desc">Request indexing after content updates</div>
-            </div>
-            <div class="validation-item">
-                <div class="icon">✅</div>
-                <div class="title">Enhancements</div>
-                <div class="desc">Verify FAQ & LocalBusiness schema valid</div>
-            </div>
-        </div>
-    </div>
+    <script>
+        const trendCtx = document.getElementById('trendChart').getContext('2d');
+        new Chart(trendCtx, {
+            type: 'line',
+            data: {
+                labels: ['Week 1 (Nov 3-9)', 'Week 2 (Nov 10-16)', 'Week 3 (Nov 17-23)'],
+                datasets: [{
+                    label: 'Organic Search Sessions',
+                    data: [295, 256, 340],
+                    borderColor: '#10b981',
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 6,
+                    pointHoverRadius: 8
+                }, {
+                    label: 'Total Sessions',
+                    data: [642, 626, 694],
+                    borderColor: '#00d4ff',
+                    backgroundColor: 'rgba(0, 212, 255, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 6,
+                    pointHoverRadius: 8
+                }, {
+                    label: 'Avg Engagement Time (s)',
+                    data: [32, 47.4, 52],
+                    borderColor: '#f59e0b',
+                    backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                    borderWidth: 3,
+                    fill: false,
+                    tension: 0.4,
+                    pointRadius: 6,
+                    pointHoverRadius: 8,
+                    yAxisID: 'y1'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: { mode: 'index', intersect: false },
+                scales: {
+                    y: {
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                        title: { display: true, text: 'Sessions' }
+                    },
+                    y1: {
+                        type: 'linear',
+                        display: true,
+                        position: 'right',
+                        title: { display: true, text: 'Engagement Time (s)' },
+                        grid: { drawOnChartArea: false }
+                    }
+                },
+                plugins: { legend: { position: 'top' } }
+            }
+        });
 
-    <div class="geographic-wins">
-        <h3>Unexpected Win: Geographic Expansion Through AI Visibility</h3>
-        <div class="geo-grid">
-            <div class="geo-item">
-                <div class="market">Houston (Core)</div>
-                <div class="growth">+2.5%</div>
-                <div class="note">Stable primary market</div>
-            </div>
-            <div class="geo-item">
-                <div class="market">Dallas</div>
-                <div class="growth">+19.7%</div>
-                <div class="note">Expansion market</div>
-            </div>
-            <div class="geo-item">
-                <div class="market">Iowa Colony</div>
-                <div class="growth">+800%</div>
-                <div class="note">Emerging submarket</div>
-            </div>
-            <div class="geo-item">
-                <div class="market">North Charleston, SC</div>
-                <div class="growth">NEW</div>
-                <div class="note">Discovered market</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="takeaway-box">
-        <h3>3 Actions To Start This Week</h3>
-        <div class="takeaway-grid">
-            <div class="takeaway-item">
-                <div class="num">1</div>
-                <div class="title">Audit Your Entity</div>
-                <div class="desc">Google yourself. Is name/address/phone consistent on GBP, Zillow, LinkedIn?</div>
-            </div>
-            <div class="takeaway-item">
-                <div class="num">2</div>
-                <div class="title">Create One Cornerstone</div>
-                <div class="desc">"[Your City] Home Buying Guide" - 1,500+ words with FAQ section</div>
-            </div>
-            <div class="takeaway-item">
-                <div class="num">3</div>
-                <div class="title">Validate Weekly</div>
-                <div class="desc">15 min in Search Console + ask ChatGPT "best realtors in [city]"</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="footer">
-        <div class="tagline">"AI isn't replacing realtors. But realtors who understand AI will replace those who don't."</div>
-        <div class="branding">
-            <span class="blok">Blok.co</span>
-            <span class="url">Real Estate Analytics</span>
-        </div>
-    </div>
+        const qualityCtx = document.getElementById('qualityChart').getContext('2d');
+        new Chart(qualityCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Organic Search', 'Referral', 'Direct', 'Paid Search', 'Organic Social', 'Display'],
+                datasets: [{
+                    label: 'Engagement Rate (%)',
+                    data: [59.4, 58.8, 49.8, 45.8, 40.0, 11.7],
+                    backgroundColor: [
+                        'rgba(16, 185, 129, 0.8)',
+                        'rgba(16, 185, 129, 0.7)',
+                        'rgba(59, 130, 246, 0.8)',
+                        'rgba(139, 92, 246, 0.8)',
+                        'rgba(156, 163, 175, 0.8)',
+                        'rgba(239, 68, 68, 0.8)'
+                    ],
+                    borderWidth: 0
+                }, {
+                    label: 'Avg Engagement Time (s)',
+                    data: [70.3, 65.1, 29.9, 89.2, 40.9, 0.3],
+                    backgroundColor: [
+                        'rgba(16, 185, 129, 0.4)',
+                        'rgba(16, 185, 129, 0.35)',
+                        'rgba(59, 130, 246, 0.4)',
+                        'rgba(139, 92, 246, 0.4)',
+                        'rgba(156, 163, 175, 0.4)',
+                        'rgba(239, 68, 68, 0.4)'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: { y: { beginAtZero: true, title: { display: true, text: 'Value' } } },
+                plugins: { legend: { position: 'top' } }
+            }
+        });
+    </script>
 </body>
 </html>
