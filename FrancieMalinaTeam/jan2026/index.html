@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Francie Malina Team | AI Search Visibility Report</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f7fa;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 40px rgba(0,0,0,0.1);
+        }
+
+        header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            padding: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left h1 {
+            color: white;
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+
+        .header-left .subtitle {
+            color: #00d4ff;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .header-left .report-date {
+            color: rgba(255,255,255,0.7);
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .header-right {
+            text-align: right;
+        }
+
+        .header-right img {
+            height: 50px;
+        }
+
+        .header-right .powered-by {
+            color: #00d4ff;
+            font-size: 12px;
+            margin-top: 8px;
+        }
+
+        .section {
+            padding: 40px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        .section-title {
+            background: linear-gradient(180deg, #00d4ff 0%, #0f3460 100%);
+            color: white;
+            padding: 12px 20px;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 25px;
+            border-radius: 4px;
+        }
+
+        h3 {
+            color: #1a1a2e;
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        h4 {
+            color: #1a1a2e;
+            font-size: 16px;
+            margin: 20px 0 10px 0;
+        }
+
+        p {
+            margin-bottom: 15px;
+        }
+
+        .insight-box {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-left: 4px solid #0ea5e9;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .insight-box strong {
+            color: #0369a1;
+        }
+
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            color: white;
+        }
+
+        .metric-card .value {
+            font-size: 36px;
+            font-weight: 700;
+            color: #00d4ff;
+            margin-bottom: 5px;
+        }
+
+        .metric-card .label {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .status-positive {
+            color: #10b981;
+            font-weight: 600;
+        }
+
+        .status-opportunity {
+            color: #f59e0b;
+            font-weight: 600;
+        }
+
+        .status-negative {
+            color: #ef4444;
+            font-weight: 600;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            padding: 14px 16px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 14px 16px;
+            border-bottom: 1px solid #eee;
+        }
+
+        tr:hover {
+            background: #f8fafc;
+        }
+
+        .rank-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .rank-1 {
+            background: #10b981;
+            color: white;
+        }
+
+        .rank-top5 {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .rank-top10 {
+            background: #8b5cf6;
+            color: white;
+        }
+
+        .rank-none {
+            background: #e5e7eb;
+            color: #6b7280;
+        }
+
+        .content-asset {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: #f8fafc;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+
+        .content-asset .icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #00d4ff 0%, #0ea5e9 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+        }
+
+        .content-asset .details h5 {
+            color: #1a1a2e;
+            margin-bottom: 3px;
+        }
+
+        .content-asset .details a {
+            color: #0ea5e9;
+            font-size: 13px;
+            text-decoration: none;
+        }
+
+        .recommendation-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .recommendation-card .priority {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .priority-high {
+            background: #fef2f2;
+            color: #dc2626;
+        }
+
+        .priority-medium {
+            background: #fffbeb;
+            color: #d97706;
+        }
+
+        .priority-low {
+            background: #f0fdf4;
+            color: #16a34a;
+        }
+
+        .query-list {
+            background: #1a1a2e;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .query-list code {
+            display: block;
+            color: #00d4ff;
+            font-family: 'Consolas', monospace;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .query-list code:last-child {
+            border-bottom: none;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .highlight-stat {
+            background: linear-gradient(135deg, #00d4ff 0%, #0ea5e9 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .highlight-stat .big-number {
+            font-size: 48px;
+            font-weight: 700;
+        }
+
+        .highlight-stat .description {
+            font-size: 16px;
+            opacity: 0.95;
+            margin-top: 5px;
+        }
+
+        footer {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 30px 40px;
+            text-align: center;
+            color: white;
+        }
+
+        footer p {
+            margin: 5px 0;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        footer a {
+            color: #00d4ff;
+            text-decoration: none;
+        }
+
+        .competitive-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .competitor-card {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #e5e7eb;
+        }
+
+        .competitor-card h5 {
+            color: #1a1a2e;
+            margin-bottom: 5px;
+        }
+
+        .competitor-card .brokerage {
+            color: #6b7280;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        .competitor-card .strength {
+            font-size: 13px;
+            color: #374151;
+        }
+
+        .screenshot-gallery {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin: 25px 0;
+        }
+
+        .screenshot-item {
+            background: #f8fafc;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #e5e7eb;
+        }
+
+        .screenshot-item .screenshot-header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .screenshot-item .screenshot-header h5 {
+            color: white;
+            margin: 0;
+            font-size: 15px;
+        }
+
+        .screenshot-item .screenshot-header .platform-badge {
+            background: #00d4ff;
+            color: #1a1a2e;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .screenshot-item .screenshot-header .rank-indicator {
+            background: #10b981;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        .screenshot-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .screenshot-item .screenshot-caption {
+            padding: 15px 20px;
+            background: white;
+            font-size: 14px;
+            color: #374151;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .screenshot-item .screenshot-caption strong {
+            color: #10b981;
+        }
+
+        @media print {
+            .container {
+                box-shadow: none;
+            }
+            .section {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-left">
+                <h1>The Francie Malina Team</h1>
+                <div class="subtitle">AI Search Visibility Report</div>
+                <div class="report-date">January 2026 | Westchester County, NY</div>
+            </div>
+            <div class="header-right">
+                <img src="/blok-logo.svg" alt="Blok.co" onerror="this.style.display='none'">
+                <div class="powered-by">Powered by Blok.co</div>
+            </div>
+        </header>
+
+        <!-- Executive Summary -->
+        <div class="section">
+            <div class="section-title">Executive Summary</div>
+
+            <div class="insight-box">
+                <strong>Key Finding:</strong> The Francie Malina Team has strong AI visibility for Rivertowns queries and is building momentum in the Scarsdale market through strategic content. Your comprehensive neighborhood guides are being indexed and cited by AI search engines.
+            </div>
+
+            <div class="metric-grid">
+                <div class="metric-card">
+                    <div class="value">#1</div>
+                    <div class="label">Rivertowns Agent Ranking</div>
+                </div>
+                <div class="metric-card">
+                    <div class="value">Top 0.5%</div>
+                    <div class="label">Nationwide by RealTrends</div>
+                </div>
+                <div class="metric-card">
+                    <div class="value">4</div>
+                    <div class="label">Scarsdale Content Assets</div>
+                </div>
+            </div>
+
+            <p>This report analyzes The Francie Malina Team's visibility across AI-powered search platforms including Perplexity, ChatGPT, Google Gemini, and Bing Copilot. Our research identifies where your brand is being cited, which queries drive visibility, and opportunities to expand your AI search footprint.</p>
+        </div>
+
+        <!-- Live AI Citations -->
+        <div class="section">
+            <div class="section-title">Live AI Citations - Verified Results</div>
+
+            <div class="insight-box">
+                <strong>Confirmed:</strong> The Francie Malina Team is actively being cited by AI search engines including Perplexity and ranking #1 in Google organic search for key Scarsdale neighborhood queries. Below are live screenshots captured January 2026.
+            </div>
+
+            <div class="screenshot-gallery">
+                <!-- Screenshot 1: Google #1 - Scarsdale Neighborhoods -->
+                <div class="screenshot-item">
+                    <div class="screenshot-header">
+                        <h5>"Heathcote vs Fox Meadow vs Greenacres Scarsdale"</h5>
+                        <div>
+                            <span class="platform-badge">Google</span>
+                            <span class="rank-indicator">#1 Organic</span>
+                        </div>
+                    </div>
+                    <img src="screenshots/google-scarsdale-neighborhoods-rank1.png" alt="Google search showing Francie Malina Team ranking #1 for Scarsdale neighborhoods comparison">
+                    <div class="screenshot-caption">
+                        <strong>The Ultimate Guide to Scarsdale, NY</strong> ranks #1 in Google for neighborhood comparison queries. This positions your content as the primary source for AI search engines citing Scarsdale neighborhood information.
+                    </div>
+                </div>
+
+                <!-- Screenshot 2: Google #1 - Quaker Ridge -->
+                <div class="screenshot-item">
+                    <div class="screenshot-header">
+                        <h5>"Quaker Ridge Scarsdale NY neighborhood guide"</h5>
+                        <div>
+                            <span class="platform-badge">Google</span>
+                            <span class="rank-indicator">#1 Organic</span>
+                        </div>
+                    </div>
+                    <img src="screenshots/google-quaker-ridge-rank1.png" alt="Google search showing Francie Malina Team ranking #1 for Quaker Ridge neighborhood guide">
+                    <div class="screenshot-caption">
+                        <strong>Quaker Ridge Neighborhood Guide | Scenic Scarsdale Living</strong> dominates the #1 position for this neighborhood-specific query, beating major competitors like Homes.com and Five Corners Properties.
+                    </div>
+                </div>
+
+                <!-- Screenshot 3: Perplexity - Best Neighborhoods -->
+                <div class="screenshot-item">
+                    <div class="screenshot-header">
+                        <h5>"best neighborhoods in Scarsdale for families"</h5>
+                        <div>
+                            <span class="platform-badge">Perplexity AI</span>
+                            <span class="rank-indicator">Source #3</span>
+                        </div>
+                    </div>
+                    <img src="screenshots/perplexity-best-neighborhoods.png" alt="Perplexity AI citing Francie Malina Team as source for best Scarsdale neighborhoods">
+                    <div class="screenshot-caption">
+                        Perplexity AI cites <strong>franciemalina.com</strong> as a primary source when answering queries about the best neighborhoods in Scarsdale for families, providing direct brand visibility to prospective buyers.
+                    </div>
+                </div>
+
+                <!-- Screenshot 4: Perplexity - Neighborhood Comparison -->
+                <div class="screenshot-item">
+                    <div class="screenshot-header">
+                        <h5>"Scarsdale neighborhoods Heathcote Fox Meadow Greenacres comparison"</h5>
+                        <div>
+                            <span class="platform-badge">Perplexity AI</span>
+                            <span class="rank-indicator">Source #1</span>
+                        </div>
+                    </div>
+                    <img src="screenshots/perplexity-scarsdale-comparison.png" alt="Perplexity AI citing Francie Malina Team for Scarsdale neighborhood comparison">
+                    <div class="screenshot-caption">
+                        <strong>The Ultimate Guide to Scarsdale, NY</strong> is cited as the #1 source for neighborhood comparison queries. Perplexity displays an at-a-glance comparison table with franciemalina.com as the primary reference.
+                    </div>
+                </div>
+
+                <!-- Screenshot 5: Perplexity - Quaker Ridge Sources -->
+                <div class="screenshot-item">
+                    <div class="screenshot-header">
+                        <h5>"Quaker Ridge neighborhood guide"</h5>
+                        <div>
+                            <span class="platform-badge">Perplexity AI</span>
+                            <span class="rank-indicator">Source #1</span>
+                        </div>
+                    </div>
+                    <img src="screenshots/perplexity-quaker-ridge-sources.png" alt="Perplexity AI showing Francie Malina Team as #1 source for Quaker Ridge">
+                    <div class="screenshot-caption">
+                        The <strong>Quaker Ridge Neighborhood Guide | Scenic Scarsdale Living</strong> appears as Source #1 in Perplexity's citations panel. Your dedicated neighborhood content is being recognized as the authoritative source.
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight-stat">
+                <div class="big-number">5</div>
+                <div class="description">Verified AI citations captured across Google and Perplexity</div>
+            </div>
+        </div>
+
+        <!-- AI Visibility Performance -->
+        <div class="section">
+            <div class="section-title">AI Search Visibility Performance</div>
+
+            <h3>Query Rankings Analysis</h3>
+            <p>We tested key real estate queries across search engines to identify where The Francie Malina Team appears in results that AI search engines use for citations.</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Search Query</th>
+                        <th>Ranking</th>
+                        <th>Citation Potential</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>top real estate agent Rivertowns Westchester NY</td>
+                        <td><span class="rank-badge rank-1">#1</span></td>
+                        <td class="status-positive">Excellent</td>
+                    </tr>
+                    <tr>
+                        <td>guide to living in Scarsdale NY schools commute</td>
+                        <td><span class="rank-badge rank-1">#1</span></td>
+                        <td class="status-positive">Excellent</td>
+                    </tr>
+                    <tr>
+                        <td>Scarsdale NY neighborhoods guide Heathcote Fox Meadow</td>
+                        <td><span class="rank-badge rank-top5">#3</span></td>
+                        <td class="status-positive">Strong</td>
+                    </tr>
+                    <tr>
+                        <td>Quaker Ridge Scarsdale NY neighborhood guide</td>
+                        <td><span class="rank-badge rank-top5">#4</span></td>
+                        <td class="status-positive">Strong</td>
+                    </tr>
+                    <tr>
+                        <td>Heathcote neighborhood guide Scarsdale</td>
+                        <td><span class="rank-badge rank-top5">#5</span></td>
+                        <td class="status-opportunity">Moderate</td>
+                    </tr>
+                    <tr>
+                        <td>best realtor Scarsdale NY 2025</td>
+                        <td><span class="rank-badge rank-none">Not Ranking</span></td>
+                        <td class="status-opportunity">Growth Area</td>
+                    </tr>
+                    <tr>
+                        <td>best realtor Dobbs Ferry NY</td>
+                        <td><span class="rank-badge rank-none">Not Ranking</span></td>
+                        <td class="status-opportunity">Growth Area</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="insight-box">
+                <strong>Strategic Insight:</strong> Your content ranks exceptionally well for <em>informational queries</em> (guides, neighborhood info, living tips) but has room to grow for <em>transactional queries</em> (best realtor, top agent). AI search engines heavily favor informational content for citations, making your current strategy effective.
+            </div>
+        </div>
+
+        <!-- Rivertowns Dominance -->
+        <div class="section">
+            <div class="section-title">Rivertowns Market Dominance</div>
+
+            <div class="highlight-stat">
+                <div class="big-number">#1</div>
+                <div class="description">Agent in the Rivertowns since 2017</div>
+            </div>
+
+            <h3>Core Market Coverage</h3>
+            <p>The Francie Malina Team maintains dominant visibility in the Rivertowns corridor, serving as the go-to authority for these communities:</p>
+
+            <div class="two-column">
+                <div>
+                    <h4>Primary Markets</h4>
+                    <ul style="margin-left: 20px;">
+                        <li>Hastings-on-Hudson</li>
+                        <li>Dobbs Ferry</li>
+                        <li>Irvington</li>
+                        <li>Tarrytown</li>
+                        <li>Sleepy Hollow</li>
+                        <li>Ardsley</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Key Differentiators</h4>
+                    <ul style="margin-left: 20px;">
+                        <li>28+ years Rivertowns residency</li>
+                        <li>Most homes sold in Westchester since 2021</li>
+                        <li>Federal Reserve Bank experience</li>
+                        <li>RealTrends Top 0.5% nationally</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h4>AI Citation Sources</h4>
+            <p>Your brand is being cited from these authoritative sources:</p>
+            <div class="content-asset">
+                <div class="icon">1</div>
+                <div class="details">
+                    <h5>Westchester Magazine Top Agents 2025</h5>
+                    <a href="https://westchestermagazine.com/home/westchester-top-real-estate-agents/" target="_blank">westchestermagazine.com</a>
+                </div>
+            </div>
+            <div class="content-asset">
+                <div class="icon">2</div>
+                <div class="details">
+                    <h5>Compass Agent Profile</h5>
+                    <a href="https://www.compass.com/agents/francie-malina/" target="_blank">compass.com/agents/francie-malina</a>
+                </div>
+            </div>
+            <div class="content-asset">
+                <div class="icon">3</div>
+                <div class="details">
+                    <h5>FastExpert Agent Profile</h5>
+                    <a href="https://www.fastexpert.com/agents/francie-malina-30488/" target="_blank">fastexpert.com</a>
+                </div>
+            </div>
+            <div class="content-asset">
+                <div class="icon">4</div>
+                <div class="details">
+                    <h5>Zillow Reviews</h5>
+                    <a href="https://www.zillow.com/profile/Francie%20Malina" target="_blank">zillow.com/profile/Francie Malina</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scarsdale Market Analysis -->
+        <div class="section">
+            <div class="section-title">Scarsdale Market Expansion</div>
+
+            <h3>Current Content Assets</h3>
+            <p>Your Scarsdale content portfolio positions you for AI visibility in this high-value market:</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Content Asset</th>
+                        <th>Coverage</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a href="https://franciemalina.com/blog/the-ultimate-guide-to-scarsdale-ny-everything-you-need-to-know/" target="_blank" style="color: #0ea5e9;">Ultimate Guide to Scarsdale, NY</a></td>
+                        <td>All 4 neighborhoods, schools, commute, pricing</td>
+                        <td class="status-positive">Ranking #1-3</td>
+                    </tr>
+                    <tr>
+                        <td><a href="https://franciemalina.com/blog/quaker-ridge-neighborhood-guide-scenic-scarsdale-living/" target="_blank" style="color: #0ea5e9;">Quaker Ridge Neighborhood Guide</a></td>
+                        <td>Dedicated deep-dive</td>
+                        <td class="status-positive">Ranking #4</td>
+                    </tr>
+                    <tr>
+                        <td><a href="https://franciemalina.com/scarsdale/" target="_blank" style="color: #0ea5e9;">Scarsdale Overview Page</a></td>
+                        <td>General market overview</td>
+                        <td class="status-opportunity">Indexing</td>
+                    </tr>
+                    <tr>
+                        <td><a href="https://franciemalina.com/market-reports/?report=Scarsdale+Market+Report" target="_blank" style="color: #0ea5e9;">Scarsdale Market Report</a></td>
+                        <td>Current pricing data</td>
+                        <td class="status-opportunity">Indexing</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Scarsdale Neighborhoods Covered</h3>
+            <div class="metric-grid">
+                <div class="metric-card">
+                    <div class="value">$3.2M</div>
+                    <div class="label">Heathcote Median</div>
+                </div>
+                <div class="metric-card">
+                    <div class="value">$2.6M</div>
+                    <div class="label">Fox Meadow Median</div>
+                </div>
+                <div class="metric-card">
+                    <div class="value">$2.3M</div>
+                    <div class="label">Greenacres Median</div>
+                </div>
+            </div>
+
+            <div class="insight-box">
+                <strong>Opportunity:</strong> Your comprehensive Scarsdale guide covers Heathcote, Fox Meadow, Greenacres, and Quaker Ridge. Creating dedicated individual guides for each neighborhood (like your Quaker Ridge guide) would significantly increase AI citation opportunities.
+            </div>
+        </div>
+
+        <!-- Competitive Landscape -->
+        <div class="section">
+            <div class="section-title">Competitive Landscape</div>
+
+            <h3>Scarsdale Market Leaders</h3>
+            <p>These agents currently dominate Scarsdale transactional queries. Your informational content strategy provides a differentiated path to visibility.</p>
+
+            <div class="competitive-grid">
+                <div class="competitor-card">
+                    <h5>Angela Retelny Team</h5>
+                    <div class="brokerage">Compass</div>
+                    <div class="strength">16 consecutive Five Star Awards; $500M+ closed sales; dominates "best realtor Scarsdale" queries</div>
+                </div>
+                <div class="competitor-card">
+                    <h5>Heather Harrison Team</h5>
+                    <div class="brokerage">Compass</div>
+                    <div class="strength">#1 Agent in Scarsdale by volume 2020-2024; $500M+ in sales</div>
+                </div>
+                <div class="competitor-card">
+                    <h5>Laura Miller</h5>
+                    <div class="brokerage">Houlihan Lawrence</div>
+                    <div class="strength">#1 Agent Scarsdale/Edgemont office; Scarsdale native; strong local presence</div>
+                </div>
+                <div class="competitor-card">
+                    <h5>Cindy Schwall</h5>
+                    <div class="brokerage">Houlihan Lawrence</div>
+                    <div class="strength">Top 1.5% nationally; #4 Scarsdale/Edgemont volume; 22+ years local</div>
+                </div>
+            </div>
+
+            <div class="insight-box">
+                <strong>Competitive Advantage:</strong> While competitors dominate transactional queries, The Francie Malina Team's educational content strategy captures prospective buyers earlier in their journey. AI search engines prefer citing comprehensive guides over agent profiles.
+            </div>
+        </div>
+
+        <!-- Google Search Console Performance -->
+        <div class="section">
+            <div class="section-title">Search Performance: Cornerstone Content</div>
+
+            <div class="insight-box">
+                <strong>Key Win:</strong> The cornerstone content we created is not only visible in AI search engines but is now the organic search leader for Scarsdale neighborhood queries, with impressions increasing significantly week-over-week.
+            </div>
+
+            <h3>The Ultimate Guide to Scarsdale, NY</h3>
+            <p>Your flagship Scarsdale content is demonstrating strong momentum in Google Search, with substantial growth in visibility and improved rankings.</p>
+
+            <div class="metric-grid">
+                <div class="metric-card">
+                    <div class="value">+142%</div>
+                    <div class="label">Impression Growth WoW</div>
+                </div>
+                <div class="metric-card">
+                    <div class="value">3.5</div>
+                    <div class="label">Avg. Position (was 6.8)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="value">2,135</div>
+                    <div class="label">Weekly Impressions</div>
+                </div>
+            </div>
+
+            <h4>Week-over-Week Comparison</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>This Week (12/29 - 1/4)</th>
+                        <th>Last Week (12/22 - 12/28)</th>
+                        <th>Change</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Impressions</td>
+                        <td>2,135</td>
+                        <td>881</td>
+                        <td class="status-positive">+1,254 (+142%)</td>
+                    </tr>
+                    <tr>
+                        <td>Average Position</td>
+                        <td>3.5</td>
+                        <td>6.8</td>
+                        <td class="status-positive">+3.3 positions</td>
+                    </tr>
+                    <tr>
+                        <td>Total Clicks</td>
+                        <td>6</td>
+                        <td>8</td>
+                        <td>-2</td>
+                    </tr>
+                    <tr>
+                        <td>Click-Through Rate</td>
+                        <td>0.3%</td>
+                        <td>0.9%</td>
+                        <td class="status-opportunity">CTR opportunity</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="screenshot-gallery" style="margin-top: 30px;">
+                <div class="screenshot-item">
+                    <div class="screenshot-header">
+                        <h5>Google Search Console - Performance Trend</h5>
+                        <div>
+                            <span class="platform-badge">Search Console</span>
+                            <span class="rank-indicator">+142% Impressions</span>
+                        </div>
+                    </div>
+                    <img src="screenshots/gsc-performance-chart.png" alt="Google Search Console showing impression growth for Scarsdale guide">
+                    <div class="screenshot-caption">
+                        <strong>Impressions trending upward</strong> - The solid line (current period) shows significantly higher daily impressions compared to the dashed line (previous period), demonstrating growing organic visibility.
+                    </div>
+                </div>
+
+                <div class="screenshot-item">
+                    <div class="screenshot-header">
+                        <h5>Top Pages Performance</h5>
+                        <div>
+                            <span class="platform-badge">Search Console</span>
+                            <span class="rank-indicator">+1,254 Impressions</span>
+                        </div>
+                    </div>
+                    <img src="screenshots/gsc-impressions-table.png" alt="Google Search Console showing page-level impression data">
+                    <div class="screenshot-caption">
+                        The Ultimate Guide to Scarsdale gained <strong>+1,254 impressions</strong> week-over-week, indicating the content is being surfaced to more searchers and building authority in Google's index.
+                    </div>
+                </div>
+            </div>
+
+            <div class="insight-box">
+                <strong>What This Means:</strong> The dramatic increase in impressions (+142%) combined with improved average position (from 6.8 to 3.5) indicates Google is recognizing your Scarsdale content as highly relevant and authoritative. As position continues to improve toward the #1-3 range, click-through rates will naturally increase. This organic visibility directly feeds AI search citations, as platforms like Perplexity and ChatGPT pull from top-ranking Google results.
+            </div>
+
+            <div class="highlight-stat" style="margin-top: 30px;">
+                <div class="big-number">+1,254</div>
+                <div class="description">Additional impressions this week for cornerstone Scarsdale content</div>
+            </div>
+        </div>
+
+        <footer>
+            <p><strong>The Francie Malina Team</strong> | AI Search Visibility Report</p>
+            <p>Report Generated: January 7, 2026</p>
+            <p>Prepared by <a href="https://blok.co" target="_blank">Blok.co</a> | <a href="https://hendricks.ai" target="_blank">Hendricks.AI</a></p>
+        </footer>
+    </div>
+</body>
+</html>
